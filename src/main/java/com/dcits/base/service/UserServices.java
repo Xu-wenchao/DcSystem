@@ -8,10 +8,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
+import com.dcits.base.mapper.RoleMapper;
 import com.dcits.base.mapper.UserMapper;
+import com.dcits.base.mapper.UserRoleRefMapper;
+import com.dcits.base.pojo.Role;
 import com.dcits.base.pojo.User;
 import com.dcits.base.pojo.UserExample;
 import com.dcits.base.pojo.UserExample.Criteria;
+import com.dcits.base.pojo.UserRoleRef;
 
 @Service
 public class UserServices {
@@ -20,6 +24,8 @@ public class UserServices {
 	private String defaultPwd;
 	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	private UserRoleRefMapper urrMapper;
 	
 	public User login(String userName, String password) {
 		UserExample ue = new UserExample();
@@ -30,10 +36,17 @@ public class UserServices {
 		return users != null && users.size() > 0 ? users.get(0) : null;
 	}
 	
-	public int addUser(User user) {
+	public int addUser(User user, String roleId) {
+		//这里应该加一个权限验证，拥有添加权限的用户才能添加
 		user.setPassword(DigestUtils.md5Hex(defaultPwd));
 		user.setOther("0");
-		return userMapper.insert(user);
+		if(userMapper.insert(user) > 0) {
+			UserRoleRef urr = new UserRoleRef();
+			urr.setUserSid(user.getSid());
+			urr.setRoleSid(Integer.parseInt(roleId));
+			return urrMapper.insert(urr);
+		}
+		return 0;
 	}
 	
 	public int updateUser(User user) {

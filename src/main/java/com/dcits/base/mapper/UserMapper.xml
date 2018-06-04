@@ -101,7 +101,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.dcits.base.pojo.User" >
+  <insert id="insert" parameterType="com.dcits.base.pojo.User" useGeneratedKeys="true" keyProperty="sid">
     insert into user (sid, itcode, name, 
       password, phone, email, 
       other)

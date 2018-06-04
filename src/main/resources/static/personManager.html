@@ -60,19 +60,19 @@
 						  <div class="form-group">
 						    <label class="col-md-2 control-label">姓名：</label>
 						    <div class="col-md-8">
-						      <input type="text" class="form-control" placeholder="请输入姓名">
+						      <input name="name" type="text" class="form-control" placeholder="请输入姓名">
 						    </div>
 						  </div>
 						  <div class="form-group">
 						    <label class="col-md-2 control-label">电话：</label>
 						    <div class="col-md-8">
-						      <input type="text" class="form-control" placeholder="请输入电话号码">
+						      <input name="phone" type="text" class="form-control" placeholder="请输入电话号码">
 						    </div>
 						  </div>
 						  <div class="form-group">
 						    <label class="col-md-2 control-label">邮箱：</label>
 						    <div class="col-md-8">
-						      <input type="email" class="form-control" placeholder="Email">
+						      <input name="email" type="email" class="form-control" placeholder="Email">
 						    </div>
 						  </div>
 						  <div class="form-group">
@@ -129,6 +129,33 @@
 	    	}
 	    </script>
 	   	<script type="text/javascript">
+	   		$("#addTrue").click(function(){
+	   			$.ajax({
+			    	url : "/addUser",
+			    	type : "GET",
+			    	dataType : "json",
+			    	data : {
+			    		"itcode" : $("input[name='itcode']").val(),
+			    		"name" : $("input[name='name']").val(),
+			    		"phone" : $("input[name='phone']").val(),
+			    		"email" : $("input[name='email']").val(),
+			    		"roleId" : $("#role").val()
+			    	},
+			    	success : function(result){
+			    		if(result.result == "1"){
+			    			$("#addCloseBtn").click();
+			    			refresh();
+			    		}else{
+			    			alert("添加失败");
+			    		}
+			    	},
+			    	error : function(result){
+			    		alert(result);
+			    	}	   				
+	   			});
+	   		});
+	   	</script>
+	   	<script type="text/javascript">
 	    	function look(sid){
 	    		
 	    	}
@@ -146,7 +173,7 @@
 			    	}
 	    		});
 	    	}
-
+			
 	    </script>
 	    <script type="text/javascript">
 	    	$(function(){

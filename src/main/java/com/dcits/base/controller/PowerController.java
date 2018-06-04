@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PowerController {
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping("/getMenus")
 	public HashMap<String, List<HashMap<String, String>>> getMenus(HttpSession session){
 		HashMap<String, List<HashMap<String, String>>> map = new HashMap<>();

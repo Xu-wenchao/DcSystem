@@ -39,8 +39,8 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/addUser")
-	public String add(User user) {
-		return "{\"result\" : \"" + userServices.addUser(user) + "\"}";
+	public String add(User user, String roleId) {
+		return "{\"result\" : \"" + userServices.addUser(user, roleId) + "\"}";
 	}
 	
 	@RequestMapping(value = "/aboutMe")
