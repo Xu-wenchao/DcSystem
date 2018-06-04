@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dcits.base.mapper.BackdiscussmsgMapper" >
+  <resultMap id="BaseResultMap" type="com.dcits.base.pojo.Backdiscussmsg" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="user_sid" property="userSid" jdbcType="INTEGER" />
+    <result column="pdm_sid" property="pdmSid" jdbcType="INTEGER" />
+    <result column="pre_sales_summarize" property="preSalesSummarize" jdbcType="VARCHAR" />
+    <result column="client_back_summarize" property="clientBackSummarize" jdbcType="VARCHAR" />
+    <result column="pre_sales_comment" property="preSalesComment" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sid, user_sid, pdm_sid, pre_sales_summarize, client_back_summarize, pre_sales_comment, 
+    remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dcits.base.pojo.BackdiscussmsgExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from backdiscussmsg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from backdiscussmsg
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from backdiscussmsg
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dcits.base.pojo.BackdiscussmsgExample" >
+    delete from backdiscussmsg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dcits.base.pojo.Backdiscussmsg" >
+    insert into backdiscussmsg (sid, user_sid, pdm_sid, 
+      pre_sales_summarize, client_back_summarize, 
+      pre_sales_comment, remark)
+    values (#{sid,jdbcType=INTEGER}, #{userSid,jdbcType=INTEGER}, #{pdmSid,jdbcType=INTEGER}, 
+      #{preSalesSummarize,jdbcType=VARCHAR}, #{clientBackSummarize,jdbcType=VARCHAR}, 
+      #{preSalesComment,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dcits.base.pojo.Backdiscussmsg" >
+    insert into backdiscussmsg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="userSid != null" >
+        user_sid,
+      </if>
+      <if test="pdmSid != null" >
+        pdm_sid,
+      </if>
+      <if test="preSalesSummarize != null" >
+        pre_sales_summarize,
+      </if>
+      <if test="clientBackSummarize != null" >
+        client_back_summarize,
+      </if>
+      <if test="preSalesComment != null" >
+        pre_sales_comment,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="userSid != null" >
+        #{userSid,jdbcType=INTEGER},
+      </if>
+      <if test="pdmSid != null" >
+        #{pdmSid,jdbcType=INTEGER},
+      </if>
+      <if test="preSalesSummarize != null" >
+        #{preSalesSummarize,jdbcType=VARCHAR},
+      </if>
+      <if test="clientBackSummarize != null" >
+        #{clientBackSummarize,jdbcType=VARCHAR},
+      </if>
+      <if test="preSalesComment != null" >
+        #{preSalesComment,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dcits.base.pojo.BackdiscussmsgExample" resultType="java.lang.Integer" >
+    select count(*) from backdiscussmsg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update backdiscussmsg
+    <set >
+      <if test="record.sid != null" >
+        sid = #{record.sid,jdbcType=INTEGER},
+      </if>
+      <if test="record.userSid != null" >
+        user_sid = #{record.userSid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pdmSid != null" >
+        pdm_sid = #{record.pdmSid,jdbcType=INTEGER},
+      </if>
+      <if test="record.preSalesSummarize != null" >
+        pre_sales_summarize = #{record.preSalesSummarize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clientBackSummarize != null" >
+        client_back_summarize = #{record.clientBackSummarize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preSalesComment != null" >
+        pre_sales_comment = #{record.preSalesComment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update backdiscussmsg
+    set sid = #{record.sid,jdbcType=INTEGER},
+      user_sid = #{record.userSid,jdbcType=INTEGER},
+      pdm_sid = #{record.pdmSid,jdbcType=INTEGER},
+      pre_sales_summarize = #{record.preSalesSummarize,jdbcType=VARCHAR},
+      client_back_summarize = #{record.clientBackSummarize,jdbcType=VARCHAR},
+      pre_sales_comment = #{record.preSalesComment,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dcits.base.pojo.Backdiscussmsg" >
+    update backdiscussmsg
+    <set >
+      <if test="userSid != null" >
+        user_sid = #{userSid,jdbcType=INTEGER},
+      </if>
+      <if test="pdmSid != null" >
+        pdm_sid = #{pdmSid,jdbcType=INTEGER},
+      </if>
+      <if test="preSalesSummarize != null" >
+        pre_sales_summarize = #{preSalesSummarize,jdbcType=VARCHAR},
+      </if>
+      <if test="clientBackSummarize != null" >
+        client_back_summarize = #{clientBackSummarize,jdbcType=VARCHAR},
+      </if>
+      <if test="preSalesComment != null" >
+        pre_sales_comment = #{preSalesComment,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dcits.base.pojo.Backdiscussmsg" >
+    update backdiscussmsg
+    set user_sid = #{userSid,jdbcType=INTEGER},
+      pdm_sid = #{pdmSid,jdbcType=INTEGER},
+      pre_sales_summarize = #{preSalesSummarize,jdbcType=VARCHAR},
+      client_back_summarize = #{clientBackSummarize,jdbcType=VARCHAR},
+      pre_sales_comment = #{preSalesComment,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+</mapper>

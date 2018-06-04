@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		
+		<link href="css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	
+	    <!-- Loading Flat UI -->
+	    <link href="css/flat-ui.min.css" rel="stylesheet">
+			<link href="css/demo.css" rel="stylesheet">
+	    <link rel="shortcut icon" href="img/favicon.ico">
+	</head>
+	<body scroll="no" style="overflow-x: hidden;">
+  		<div class="demo-type-example">
+        	<blockquote>
+        		<div class="row">
+        			<div class="col-md-1" style="text-align: right">
+						<strong>ITCODE：</strong>    				
+        			</div>
+        			<div class="">
+        				<span id='itcode'></span>
+        			</div>
+        		</div>
+        		<div class="row">
+        			<div class="col-md-1" style="text-align: right">
+						<strong>姓名：</strong>    				
+        			</div>
+        			<div class="">
+        				<span id='name'></span>
+        			</div>
+        		</div>
+        		<div class="row">
+        			<div class="col-md-1" style="text-align: right">
+						<strong>电话：</strong>    				
+        			</div>
+        			<div class="">
+        				<span id='phone'></span>
+        			</div>
+        		</div>
+        		<div class="row">
+        			<div class="col-md-1" style="text-align: right">
+						<strong>邮箱：</strong>    				
+        			</div>
+        			<div class="">
+        				<span id='email'></span>
+        			</div>
+        		</div>
+          	</blockquote>
+  		</div>
+  		
+  		<div class="row demo-row">
+	        <div class="col-md-3">
+				<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#updateMsgModal">
+					修改信息
+				</button>
+	        </div>
+      	</div> <!-- /row -->
+      	<div class="row demo-row">
+	        <div class="col-md-3">
+				<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#updatePwdModal">
+				  	修改密码
+				</button>
+	        </div>
+      	</div> <!-- /row -->
+      	<!-- Button trigger modal -->
+		<!-- Modal -->
+		<div class="modal fade" id="updateMsgModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">修改信息</h4>
+		      </div>
+		      <div id="updateMsg" class="modal-body" style="text-align: right;">
+					<div class="row form-group has-success">
+						<div class="col-md-4">
+							<label>itcode：</label>
+						</div>
+						<div class="col-md-8">
+							<input name="itcode" type="text" class="form-control" disabled/>	
+						</div>
+					</div>
+					<div class="row form-group has-success">
+						<div class="col-md-4">
+							<label>姓名：</label>
+						</div>
+						<div class="col-md-8">
+							<input name="name" type="text" class="form-control"/>	
+						</div>
+					</div>
+					<div class="row form-group has-success">
+						<div class="col-md-4">
+							<label>电话：</label>
+						</div>
+						<div class="col-md-8">
+							<input name="phone" type="text" class="form-control"/>	
+						</div>
+					</div>
+					<div class="row form-group has-success">
+						<div class="col-md-4">
+							<label>邮箱：</label>
+						</div>
+						<div class="col-md-8">
+							<input name="email" type="text" class="form-control"/>	
+						</div>
+					</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" id="msgCloseBtn" class="btn btn-default" data-dismiss="modal">关闭</button>
+		        <button type="button" class="btn btn-primary" id="updateMsgBtn">修改</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<!-- Modal -->
+		<div class="modal fade" id="updatePwdModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">修改密码</h4>
+		      </div>
+		      <div class="modal-body" style="text-align: right;">
+					<div class="row form-group has-success">
+						<div class="col-md-4">
+							<label>旧密码：</label>
+						</div>
+						<div class="col-md-8">
+							<input name="oldPwd" type="password" class="form-control"/>	
+						</div>
+					</div>
+					<div class="row form-group has-success">
+						<div class="col-md-4">
+							<span>新密码：</span>
+						</div>
+						<div class="col-md-8">
+							<input name="newPwd" type="password" class="form-control"/>	
+						</div>
+					</div>
+					<div class="row form-group has-success">
+						<div class="col-md-4">
+							<span>确认密码：</span>
+						</div>
+						<div class="col-md-8">
+							<input name="vertifyPwd" type="password" class="form-control"/>	
+						</div>
+					</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" id="pwdCloseBtn" class="btn btn-default" data-dismiss="modal">关闭</button>
+		        <button type="button" class="btn btn-primary" id="updatePwdBtn">确认</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+      		
+	    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+	    <script src="js/vendor/jquery.min.js"></script>
+	    <!-- Include all compiled plugins (below), or include individual files as needed -->
+	    <script src="js/vendor/video.js"></script>
+	    <script src="js/flat-ui.min.js"></script>
+	    <script src="js/application.js"></script>
+		<script type="text/javascript">
+			function getQueryString(name) { 
+		        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+		        var r = window.location.search.substr(1).match(reg); 
+		        if (r != null) return unescape(r[2]); 
+		        return null; 
+		    }  
+			$.ajax({
+		    	url : "/queryAUser",
+		    	type : "GET",
+		    	dataType : "json",
+		    	data : {
+		    		"sid" : getQueryString('sid')
+		    	},
+		    	success : function(result){
+		    		$('#name').text(result.name);
+		    		$('#itcode').text(result.itcode);
+		    		$('#phone').text(result.phone);
+		    		$('#email').text(result.email);
+		    		$(':input[name="name"]').val(result.name);
+		    		$(':input[name="itcode"]').val(result.itcode);
+		    		$(':input[name="phone"]').val(result.phone);
+		    		$(':input[name="email"]').val(result.email);
+		    	}				
+			});
+		</script>
+		<script type="text/javascript">
+			$("#updateMsgBtn").click(function(){
+				$.ajax({
+			    	url : "/updateUser",
+			    	type : "GET",
+			    	dataType : "json",
+			    	data : {
+			    		'sid' : getQueryString('sid'),
+			    		'name' : $(':input[name="name"]').val(),
+			    		'itcode' : $(':input[name="itcode"]').val(),
+			    		'phone' : $(':input[name="phone"]').val(),
+			    		'email' : $(':input[name="email"]').val()
+			    	},
+			    	success : function(result){
+			    		if(result.result == "1"){
+				    		$('#name').text($(':input[name="name"]').val());
+				    		$('#itcode').text($(':input[name="itcode"]').val());
+				    		$('#phone').text($(':input[name="phone"]').val());
+				    		$('#email').text($(':input[name="email"]').val());
+				    		$("#msgCloseBtn").click();
+			    		}else{
+			    			alert("信息修改失败");
+			    		}
+			    	},
+			    	error : function(result){
+			    		alert(JSON.stringify(result));
+			    	}
+				});
+			});
+			$("#updatePwdBtn").click(function(){
+				let newPwd = $(':input[name="newPwd"]').val();
+				let oldPwd = $(':input[name="oldPwd"]').val();
+				let vertifyPwd = $(':input[name="vertifyPwd"]').val();
+				if(newPwd != vertifyPwd){
+					alert("新密码和验证密码不一致");
+					return;
+				}else if(newPwd == ""){
+					alert("密码不能为空");
+					return;
+				}
+				$.ajax({
+			    	url : "/updatePwd",
+			    	type : "GET",
+			    	dataType : "json",
+			    	data : {
+			    		'sid' : getQueryString('sid'),
+			    		'oldPwd' : oldPwd,
+			    		'newPwd' : newPwd
+			    	},
+			    	success : function(result){
+						if(result.result == "1"){
+							$("#pwdCloseBtn").click();
+						}else{
+							alert("密码修改失败");
+						}
+			    	},
+			    	error : function(result){
+			    		alert(JSON.stringify(result));
+			    	}				
+				});
+			});
+			
+		</script>
+	</body>
+</html>

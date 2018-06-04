@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dcits.base.mapper.IndiscussmsgMapper" >
+  <resultMap id="BaseResultMap" type="com.dcits.base.pojo.Indiscussmsg" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="user_sid" property="userSid" jdbcType="INTEGER" />
+    <result column="pdm_sid" property="pdmSid" jdbcType="INTEGER" />
+    <result column="discuss_proficient" property="discussProficient" jdbcType="VARCHAR" />
+    <result column="discuss_time" property="discussTime" jdbcType="VARCHAR" />
+    <result column="discuss_way" property="discussWay" jdbcType="VARCHAR" />
+    <result column="discuss_file" property="discussFile" jdbcType="VARCHAR" />
+    <result column="pre_sales_days" property="preSalesDays" jdbcType="VARCHAR" />
+    <result column="reimbursement_amount" property="reimbursementAmount" jdbcType="VARCHAR" />
+    <result column="apartment_person" property="apartmentPerson" jdbcType="VARCHAR" />
+    <result column="discuss_result" property="discussResult" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sid, user_sid, pdm_sid, discuss_proficient, discuss_time, discuss_way, discuss_file, 
+    pre_sales_days, reimbursement_amount, apartment_person, discuss_result, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dcits.base.pojo.IndiscussmsgExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from indiscussmsg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from indiscussmsg
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from indiscussmsg
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dcits.base.pojo.IndiscussmsgExample" >
+    delete from indiscussmsg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dcits.base.pojo.Indiscussmsg" >
+    insert into indiscussmsg (sid, user_sid, pdm_sid, 
+      discuss_proficient, discuss_time, discuss_way, 
+      discuss_file, pre_sales_days, reimbursement_amount, 
+      apartment_person, discuss_result, remark
+      )
+    values (#{sid,jdbcType=INTEGER}, #{userSid,jdbcType=INTEGER}, #{pdmSid,jdbcType=INTEGER}, 
+      #{discussProficient,jdbcType=VARCHAR}, #{discussTime,jdbcType=VARCHAR}, #{discussWay,jdbcType=VARCHAR}, 
+      #{discussFile,jdbcType=VARCHAR}, #{preSalesDays,jdbcType=VARCHAR}, #{reimbursementAmount,jdbcType=VARCHAR}, 
+      #{apartmentPerson,jdbcType=VARCHAR}, #{discussResult,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dcits.base.pojo.Indiscussmsg" >
+    insert into indiscussmsg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="userSid != null" >
+        user_sid,
+      </if>
+      <if test="pdmSid != null" >
+        pdm_sid,
+      </if>
+      <if test="discussProficient != null" >
+        discuss_proficient,
+      </if>
+      <if test="discussTime != null" >
+        discuss_time,
+      </if>
+      <if test="discussWay != null" >
+        discuss_way,
+      </if>
+      <if test="discussFile != null" >
+        discuss_file,
+      </if>
+      <if test="preSalesDays != null" >
+        pre_sales_days,
+      </if>
+      <if test="reimbursementAmount != null" >
+        reimbursement_amount,
+      </if>
+      <if test="apartmentPerson != null" >
+        apartment_person,
+      </if>
+      <if test="discussResult != null" >
+        discuss_result,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="userSid != null" >
+        #{userSid,jdbcType=INTEGER},
+      </if>
+      <if test="pdmSid != null" >
+        #{pdmSid,jdbcType=INTEGER},
+      </if>
+      <if test="discussProficient != null" >
+        #{discussProficient,jdbcType=VARCHAR},
+      </if>
+      <if test="discussTime != null" >
+        #{discussTime,jdbcType=VARCHAR},
+      </if>
+      <if test="discussWay != null" >
+        #{discussWay,jdbcType=VARCHAR},
+      </if>
+      <if test="discussFile != null" >
+        #{discussFile,jdbcType=VARCHAR},
+      </if>
+      <if test="preSalesDays != null" >
+        #{preSalesDays,jdbcType=VARCHAR},
+      </if>
+      <if test="reimbursementAmount != null" >
+        #{reimbursementAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="apartmentPerson != null" >
+        #{apartmentPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="discussResult != null" >
+        #{discussResult,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dcits.base.pojo.IndiscussmsgExample" resultType="java.lang.Integer" >
+    select count(*) from indiscussmsg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update indiscussmsg
+    <set >
+      <if test="record.sid != null" >
+        sid = #{record.sid,jdbcType=INTEGER},
+      </if>
+      <if test="record.userSid != null" >
+        user_sid = #{record.userSid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pdmSid != null" >
+        pdm_sid = #{record.pdmSid,jdbcType=INTEGER},
+      </if>
+      <if test="record.discussProficient != null" >
+        discuss_proficient = #{record.discussProficient,jdbcType=VARCHAR},
+      </if>
+      <if test="record.discussTime != null" >
+        discuss_time = #{record.discussTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.discussWay != null" >
+        discuss_way = #{record.discussWay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.discussFile != null" >
+        discuss_file = #{record.discussFile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preSalesDays != null" >
+        pre_sales_days = #{record.preSalesDays,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reimbursementAmount != null" >
+        reimbursement_amount = #{record.reimbursementAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apartmentPerson != null" >
+        apartment_person = #{record.apartmentPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.discussResult != null" >
+        discuss_result = #{record.discussResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update indiscussmsg
+    set sid = #{record.sid,jdbcType=INTEGER},
+      user_sid = #{record.userSid,jdbcType=INTEGER},
+      pdm_sid = #{record.pdmSid,jdbcType=INTEGER},
+      discuss_proficient = #{record.discussProficient,jdbcType=VARCHAR},
+      discuss_time = #{record.discussTime,jdbcType=VARCHAR},
+      discuss_way = #{record.discussWay,jdbcType=VARCHAR},
+      discuss_file = #{record.discussFile,jdbcType=VARCHAR},
+      pre_sales_days = #{record.preSalesDays,jdbcType=VARCHAR},
+      reimbursement_amount = #{record.reimbursementAmount,jdbcType=VARCHAR},
+      apartment_person = #{record.apartmentPerson,jdbcType=VARCHAR},
+      discuss_result = #{record.discussResult,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dcits.base.pojo.Indiscussmsg" >
+    update indiscussmsg
+    <set >
+      <if test="userSid != null" >
+        user_sid = #{userSid,jdbcType=INTEGER},
+      </if>
+      <if test="pdmSid != null" >
+        pdm_sid = #{pdmSid,jdbcType=INTEGER},
+      </if>
+      <if test="discussProficient != null" >
+        discuss_proficient = #{discussProficient,jdbcType=VARCHAR},
+      </if>
+      <if test="discussTime != null" >
+        discuss_time = #{discussTime,jdbcType=VARCHAR},
+      </if>
+      <if test="discussWay != null" >
+        discuss_way = #{discussWay,jdbcType=VARCHAR},
+      </if>
+      <if test="discussFile != null" >
+        discuss_file = #{discussFile,jdbcType=VARCHAR},
+      </if>
+      <if test="preSalesDays != null" >
+        pre_sales_days = #{preSalesDays,jdbcType=VARCHAR},
+      </if>
+      <if test="reimbursementAmount != null" >
+        reimbursement_amount = #{reimbursementAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="apartmentPerson != null" >
+        apartment_person = #{apartmentPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="discussResult != null" >
+        discuss_result = #{discussResult,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dcits.base.pojo.Indiscussmsg" >
+    update indiscussmsg
+    set user_sid = #{userSid,jdbcType=INTEGER},
+      pdm_sid = #{pdmSid,jdbcType=INTEGER},
+      discuss_proficient = #{discussProficient,jdbcType=VARCHAR},
+      discuss_time = #{discussTime,jdbcType=VARCHAR},
+      discuss_way = #{discussWay,jdbcType=VARCHAR},
+      discuss_file = #{discussFile,jdbcType=VARCHAR},
+      pre_sales_days = #{preSalesDays,jdbcType=VARCHAR},
+      reimbursement_amount = #{reimbursementAmount,jdbcType=VARCHAR},
+      apartment_person = #{apartmentPerson,jdbcType=VARCHAR},
+      discuss_result = #{discussResult,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+</mapper>

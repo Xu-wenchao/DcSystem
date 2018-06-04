@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dcits.base.mapper.PrediscussmsgMapper" >
+  <resultMap id="BaseResultMap" type="com.dcits.base.pojo.Prediscussmsg" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="proposer" property="proposer" jdbcType="VARCHAR" />
+    <result column="pre_sales_type" property="preSalesType" jdbcType="VARCHAR" />
+    <result column="application_date" property="applicationDate" jdbcType="TIMESTAMP" />
+    <result column="proposer_department" property="proposerDepartment" jdbcType="VARCHAR" />
+    <result column="aim_unit" property="aimUnit" jdbcType="VARCHAR" />
+    <result column="aim_department" property="aimDepartment" jdbcType="VARCHAR" />
+    <result column="aim_location" property="aimLocation" jdbcType="VARCHAR" />
+    <result column="aim_time" property="aimTime" jdbcType="VARCHAR" />
+    <result column="client_interface" property="clientInterface" jdbcType="VARCHAR" />
+    <result column="client_duty" property="clientDuty" jdbcType="VARCHAR" />
+    <result column="client_back" property="clientBack" jdbcType="VARCHAR" />
+    <result column="aim_purpose" property="aimPurpose" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sid, user_id, proposer, pre_sales_type, application_date, proposer_department, aim_unit, 
+    aim_department, aim_location, aim_time, client_interface, client_duty, client_back, 
+    aim_purpose, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dcits.base.pojo.PrediscussmsgExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from prediscussmsg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from prediscussmsg
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from prediscussmsg
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dcits.base.pojo.PrediscussmsgExample" >
+    delete from prediscussmsg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dcits.base.pojo.Prediscussmsg" >
+    insert into prediscussmsg (sid, user_id, proposer, 
+      pre_sales_type, application_date, proposer_department, 
+      aim_unit, aim_department, aim_location, 
+      aim_time, client_interface, client_duty, 
+      client_back, aim_purpose, remark
+      )
+    values (#{sid,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{proposer,jdbcType=VARCHAR}, 
+      #{preSalesType,jdbcType=VARCHAR}, #{applicationDate,jdbcType=TIMESTAMP}, #{proposerDepartment,jdbcType=VARCHAR}, 
+      #{aimUnit,jdbcType=VARCHAR}, #{aimDepartment,jdbcType=VARCHAR}, #{aimLocation,jdbcType=VARCHAR}, 
+      #{aimTime,jdbcType=VARCHAR}, #{clientInterface,jdbcType=VARCHAR}, #{clientDuty,jdbcType=VARCHAR}, 
+      #{clientBack,jdbcType=VARCHAR}, #{aimPurpose,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dcits.base.pojo.Prediscussmsg" >
+    insert into prediscussmsg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="proposer != null" >
+        proposer,
+      </if>
+      <if test="preSalesType != null" >
+        pre_sales_type,
+      </if>
+      <if test="applicationDate != null" >
+        application_date,
+      </if>
+      <if test="proposerDepartment != null" >
+        proposer_department,
+      </if>
+      <if test="aimUnit != null" >
+        aim_unit,
+      </if>
+      <if test="aimDepartment != null" >
+        aim_department,
+      </if>
+      <if test="aimLocation != null" >
+        aim_location,
+      </if>
+      <if test="aimTime != null" >
+        aim_time,
+      </if>
+      <if test="clientInterface != null" >
+        client_interface,
+      </if>
+      <if test="clientDuty != null" >
+        client_duty,
+      </if>
+      <if test="clientBack != null" >
+        client_back,
+      </if>
+      <if test="aimPurpose != null" >
+        aim_purpose,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="proposer != null" >
+        #{proposer,jdbcType=VARCHAR},
+      </if>
+      <if test="preSalesType != null" >
+        #{preSalesType,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationDate != null" >
+        #{applicationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="proposerDepartment != null" >
+        #{proposerDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="aimUnit != null" >
+        #{aimUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="aimDepartment != null" >
+        #{aimDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="aimLocation != null" >
+        #{aimLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="aimTime != null" >
+        #{aimTime,jdbcType=VARCHAR},
+      </if>
+      <if test="clientInterface != null" >
+        #{clientInterface,jdbcType=VARCHAR},
+      </if>
+      <if test="clientDuty != null" >
+        #{clientDuty,jdbcType=VARCHAR},
+      </if>
+      <if test="clientBack != null" >
+        #{clientBack,jdbcType=VARCHAR},
+      </if>
+      <if test="aimPurpose != null" >
+        #{aimPurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dcits.base.pojo.PrediscussmsgExample" resultType="java.lang.Integer" >
+    select count(*) from prediscussmsg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update prediscussmsg
+    <set >
+      <if test="record.sid != null" >
+        sid = #{record.sid,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.proposer != null" >
+        proposer = #{record.proposer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preSalesType != null" >
+        pre_sales_type = #{record.preSalesType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicationDate != null" >
+        application_date = #{record.applicationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.proposerDepartment != null" >
+        proposer_department = #{record.proposerDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aimUnit != null" >
+        aim_unit = #{record.aimUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aimDepartment != null" >
+        aim_department = #{record.aimDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aimLocation != null" >
+        aim_location = #{record.aimLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aimTime != null" >
+        aim_time = #{record.aimTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clientInterface != null" >
+        client_interface = #{record.clientInterface,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clientDuty != null" >
+        client_duty = #{record.clientDuty,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clientBack != null" >
+        client_back = #{record.clientBack,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aimPurpose != null" >
+        aim_purpose = #{record.aimPurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update prediscussmsg
+    set sid = #{record.sid,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      proposer = #{record.proposer,jdbcType=VARCHAR},
+      pre_sales_type = #{record.preSalesType,jdbcType=VARCHAR},
+      application_date = #{record.applicationDate,jdbcType=TIMESTAMP},
+      proposer_department = #{record.proposerDepartment,jdbcType=VARCHAR},
+      aim_unit = #{record.aimUnit,jdbcType=VARCHAR},
+      aim_department = #{record.aimDepartment,jdbcType=VARCHAR},
+      aim_location = #{record.aimLocation,jdbcType=VARCHAR},
+      aim_time = #{record.aimTime,jdbcType=VARCHAR},
+      client_interface = #{record.clientInterface,jdbcType=VARCHAR},
+      client_duty = #{record.clientDuty,jdbcType=VARCHAR},
+      client_back = #{record.clientBack,jdbcType=VARCHAR},
+      aim_purpose = #{record.aimPurpose,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dcits.base.pojo.Prediscussmsg" >
+    update prediscussmsg
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="proposer != null" >
+        proposer = #{proposer,jdbcType=VARCHAR},
+      </if>
+      <if test="preSalesType != null" >
+        pre_sales_type = #{preSalesType,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationDate != null" >
+        application_date = #{applicationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="proposerDepartment != null" >
+        proposer_department = #{proposerDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="aimUnit != null" >
+        aim_unit = #{aimUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="aimDepartment != null" >
+        aim_department = #{aimDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="aimLocation != null" >
+        aim_location = #{aimLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="aimTime != null" >
+        aim_time = #{aimTime,jdbcType=VARCHAR},
+      </if>
+      <if test="clientInterface != null" >
+        client_interface = #{clientInterface,jdbcType=VARCHAR},
+      </if>
+      <if test="clientDuty != null" >
+        client_duty = #{clientDuty,jdbcType=VARCHAR},
+      </if>
+      <if test="clientBack != null" >
+        client_back = #{clientBack,jdbcType=VARCHAR},
+      </if>
+      <if test="aimPurpose != null" >
+        aim_purpose = #{aimPurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dcits.base.pojo.Prediscussmsg" >
+    update prediscussmsg
+    set user_id = #{userId,jdbcType=INTEGER},
+      proposer = #{proposer,jdbcType=VARCHAR},
+      pre_sales_type = #{preSalesType,jdbcType=VARCHAR},
+      application_date = #{applicationDate,jdbcType=TIMESTAMP},
+      proposer_department = #{proposerDepartment,jdbcType=VARCHAR},
+      aim_unit = #{aimUnit,jdbcType=VARCHAR},
+      aim_department = #{aimDepartment,jdbcType=VARCHAR},
+      aim_location = #{aimLocation,jdbcType=VARCHAR},
+      aim_time = #{aimTime,jdbcType=VARCHAR},
+      client_interface = #{clientInterface,jdbcType=VARCHAR},
+      client_duty = #{clientDuty,jdbcType=VARCHAR},
+      client_back = #{clientBack,jdbcType=VARCHAR},
+      aim_purpose = #{aimPurpose,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+</mapper>
