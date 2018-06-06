@@ -22,6 +22,7 @@ public class PreDiscussMsgController {
 	public String addPreMsg(Prediscussmsg msg, HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		msg.setUserId(user.getSid());
+		msg.setRemark("待分派");
 		return "{\"result\" : \"" + services.addPreMsg(msg) + "\"}";
 	}
 	
@@ -36,5 +37,10 @@ public class PreDiscussMsgController {
 		HashMap<String, List<Prediscussmsg>> map = new HashMap<>();
 		map.put("preMsgs", services.getPreMsgsByUserSid(((User)session.getAttribute("user")).getSid()));
 		return map;
+	}
+	
+	@RequestMapping("/getPreMsg")
+	public Prediscussmsg getPreMsgs(Integer sid){
+		return services.getPreMsgBySid(sid);
 	}
 }

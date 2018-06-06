@@ -30,8 +30,8 @@ public class UserServices {
 	public User login(String userName, String password) {
 		UserExample ue = new UserExample();
 		Criteria criteria = ue.createCriteria();
-		criteria.andNameEqualTo(userName);
-		criteria.andPasswordEqualTo(DigestUtils.md5Hex(defaultPwd));
+		criteria.andItcodeEqualTo(userName);
+		criteria.andPasswordEqualTo(DigestUtils.md5Hex(password));
 		List<User> users = userMapper.selectByExample(ue);
 		return users != null && users.size() > 0 ? users.get(0) : null;
 	}
@@ -63,6 +63,7 @@ public class UserServices {
 		if(user == null || !user.getPassword().equals(DigestUtils.md5Hex(oldPwd))) {
 			return 0;
 		}else {
+			user.setPassword(DigestUtils.md5Hex(newPwd));
 			return userMapper.updateByPrimaryKey(user);
 		}
 	}

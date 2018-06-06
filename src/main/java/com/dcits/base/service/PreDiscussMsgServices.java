@@ -20,6 +20,9 @@ public class PreDiscussMsgServices {
 	private PrediscussmsgMapper preDiscussMsgMapper;
 	
 
+	public Prediscussmsg getPreMsgBySid(int sid) {
+		return preDiscussMsgMapper.selectByPrimaryKey(sid);
+	}
 	
 	public List<Prediscussmsg> getPreMsgsByUserSid(int userSid){
 		PrediscussmsgExample example = new PrediscussmsgExample();

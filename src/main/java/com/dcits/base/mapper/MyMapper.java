@@ -15,8 +15,8 @@ public interface MyMapper {
 			+ "and user.sid=user_role_ref.user_sid and role.sid=user_role_ref.role_sid")
 	HashMap<String, Object> getRole(Integer id);
 	
-	@Select("select menu.menu_name, menu.remark from role, rolepower, menu where role.sid=1 " 
+	@Select("select menu.menu_name, menu.remark from role, rolepower, menu where role.sid=#{id} " 
 			+ "and role.sid=rolepower.role_sid and rolepower.menu_sid=menu.sid")
-	List<HashMap<String, String>> getMenus(Integer sid);
+	List<HashMap<String, String>> getMenus(Integer id);
 	
 }

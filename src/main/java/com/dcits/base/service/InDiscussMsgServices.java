@@ -8,12 +8,17 @@ import org.springframework.stereotype.Service;
 import com.dcits.base.mapper.IndiscussmsgMapper;
 import com.dcits.base.pojo.Indiscussmsg;
 import com.dcits.base.pojo.IndiscussmsgExample;
+import com.dcits.base.pojo.Prediscussmsg;
 import com.dcits.base.pojo.IndiscussmsgExample.Criteria;
 
 @Service
 public class InDiscussMsgServices {
 	@Autowired
 	private IndiscussmsgMapper inDiscussMsgMapper;
+	
+	public Indiscussmsg getInMsgBySid(int sid) {
+		return inDiscussMsgMapper.selectByPrimaryKey(sid);
+	}
 	
 	public List<Indiscussmsg> getInMsgsByUserSid(int userSid){
 		IndiscussmsgExample example = new IndiscussmsgExample();

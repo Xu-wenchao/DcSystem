@@ -8,12 +8,17 @@ import org.springframework.stereotype.Service;
 import com.dcits.base.mapper.BackdiscussmsgMapper;
 import com.dcits.base.pojo.Backdiscussmsg;
 import com.dcits.base.pojo.BackdiscussmsgExample;
+import com.dcits.base.pojo.Prediscussmsg;
 import com.dcits.base.pojo.BackdiscussmsgExample.Criteria;
 
 @Service
 public class BackDiscussMsgServices {
 	@Autowired
 	private BackdiscussmsgMapper backDiscussMsgMapper;
+	
+	public Backdiscussmsg getBackMsgBySid(int sid) {
+		return backDiscussMsgMapper.selectByPrimaryKey(sid);
+	}
 	
 	public List<Backdiscussmsg> getBackMsgsByUserSid(int userSid){
 		BackdiscussmsgExample example = new BackdiscussmsgExample();

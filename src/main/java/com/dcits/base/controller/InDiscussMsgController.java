@@ -38,4 +38,10 @@ public class InDiscussMsgController {
 		map.put("inMsgs", services.getInMsgsByUserSid(((User)session.getAttribute("user")).getSid()));
 		return map;
 	}
+	@RequestMapping("/getInMsg")
+	public Indiscussmsg getInMsg(Integer sid){
+		return services.getInMsgBySid(sid);
+	}
+	
+	
 }

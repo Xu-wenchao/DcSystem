@@ -37,4 +37,9 @@ public class BackDiscussMsgController {
 		map.put("backMsgs", services.getBackMsgsByUserSid(((User)session.getAttribute("user")).getSid()));
 		return map;
 	}
+	
+	@RequestMapping("/getBackMsg")
+	public Backdiscussmsg getBackMsgs(Integer sid){
+		return services.getBackMsgBySid(sid);
+	}
 }
