@@ -19,7 +19,9 @@ public class BackDiscussMsgController {
 	private BackDiscussMsgServices services;
 	
 	@RequestMapping("/addBackMsg")
-	public String addBackMsg(Backdiscussmsg msg) {
+	public String addBackMsg(Backdiscussmsg msg, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		msg.setUserSid(user.getSid());
 		return "{\"result\" : \"" + services.addBackMsg(msg) + "\"}";
 	}
 	

@@ -19,7 +19,9 @@ public class PreDiscussMsgController {
 	private PreDiscussMsgServices services;
 	
 	@RequestMapping("/addPreMsg")
-	public String addPreMsg(Prediscussmsg msg) {
+	public String addPreMsg(Prediscussmsg msg, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		msg.setUserId(user.getSid());
 		return "{\"result\" : \"" + services.addPreMsg(msg) + "\"}";
 	}
 	

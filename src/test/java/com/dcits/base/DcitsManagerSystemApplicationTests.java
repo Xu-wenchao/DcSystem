@@ -13,9 +13,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.dcits.base.mapper.MyMapper;
+import com.dcits.base.pojo.Keycode;
 import com.dcits.base.pojo.Menu;
 import com.dcits.base.pojo.Role;
 import com.dcits.base.pojo.User;
+import com.dcits.base.service.KeyCodeServices;
 import com.dcits.base.service.UserServices;
 
 
@@ -25,6 +27,9 @@ public class DcitsManagerSystemApplicationTests {
 
 	@Autowired
 	private UserServices userServices;
+	
+	@Autowired
+	private KeyCodeServices keyCodeServices;
 	
 	@Autowired
 	private MyMapper myMapper;
@@ -40,6 +45,15 @@ public class DcitsManagerSystemApplicationTests {
 		HashMap<String, Object> role = myMapper.getRole(1);
 		System.out.println(role);
 
+	}
+	
+	@Test
+	public void testKeyCode() {
+		List<Keycode> taskTypes = keyCodeServices.getKeyCodeByFtype("1");
+		System.out.println("size:" + taskTypes.size());
+		for(Keycode kc : taskTypes) {
+			System.out.println(kc.getFvalue());
+		}
 	}
 
 }

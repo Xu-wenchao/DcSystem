@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	
+	    <!-- Loading Flat UI -->
+	    <link href="css/flat-ui.min.css" rel="stylesheet">
+			<link href="css/demo.css" rel="stylesheet">
+	    <link rel="shortcut icon" href="img/favicon.ico">
+	</head>
+	<body style="overflow-x: hidden;">
+		<div>
+			<div class="row">
+				<div class="col-md-2" style="padding-bottom: 10px;">
+					<a class="btn btn-block btn-primary" data-toggle="modal" id="addPreMsg">添加</a>				
+				</div>
+				<div class="col-md-8 col-md-offset-2">
+					<form class="navbar-form navbar-right" action="#" role="search">
+		                <div class="form-group">
+		                  <div class="input-group">
+		                    <input class="form-control" id="navbarInput-01" type="search" placeholder="Search">
+		                    <span class="input-group-btn">
+		                      <button type="submit" class="btn"><span class="fui-search"></span></button>
+		                    </span>
+		                  </div>
+		                </div>
+	              	</form>
+				</div>
+			</div>
+			<table class="table table-hover" id='userList'>
+			  	<tr>
+			  		<th>#</th>
+			  		<th>申请人</th>
+			  		<th>售前任务类型</th>
+			  		<th>申请日期</th>
+			  		<th>交流单位</th>
+			  		<th>客户接洽人</th>
+			  		<th>&nbsp;&nbsp;&nbsp;&nbsp;操作</th>
+			  	</tr>
+			</table>
+
+		</div>
+
+		
+	    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+	    <script src="js/vendor/jquery.min.js"></script>
+	    <!-- Include all compiled plugins (below), or include individual files as needed -->
+	    <script src="js/vendor/video.js"></script>
+	    <script src="js/flat-ui.min.js"></script>
+	    <script src="js/application.js"></script>
+	    <script type="text/javascript">
+	    	function refresh(){
+				$.ajax({
+			    	url : "/getPreMsgs",
+			    	type : "GET",
+			    	dataType : "json",
+			    	success : function(result){
+			    		//result.users	    		
+			    		let sw = ['active', 'success', 'warning', 'danger', 'info'];
+			    		for(let i = 0; i < result.preMsgs.length; i++){
+			    			let $tr = "<tr class='" + sw[i % 5] + "'>";
+			    			$tr += '<td style="vertical-align: middle;">' + (i + 1) + '</td>';
+			    			$tr += '<td style="vertical-align: middle;">' + result.preMsgs[i].proposer + '</td>';
+			    			$tr += '<td style="vertical-align: middle;">' + result.preMsgs[i].preSalesType + '</td>';
+			    			$tr += '<td style="vertical-align: middle;">' + result.preMsgs[i].applicationDate.substr(0,10) + '</td>';
+			    			$tr += '<td style="vertical-align: middle;">' + result.preMsgs[i].aimUnit + '</td>';
+			    			$tr += '<td style="vertical-align: middle;">' + result.preMsgs[i].clientInterface + '</td>';
+					  		$tr += '<td><button class="btn btn-sm btn-success" onclick="look(' + result.preMsgs[i].sid + ')">查看</button></td>';
+			    			$tr += "</tr>";
+			    			$("#userList").append($tr);
+			    		}
+			    	},
+			    	error : function(result){
+			    		alert(JSON.stringify(result));
+			    	}				
+				});
+	    	}
+	    	refresh();
+	    </script>
+		<script type="text/javascript">
+			//addPreMsg
+			$("#addPreMsg").click(function(){
+				$(location).attr('href', 'addPreMsg.html');
+			});
+		</script>
+	</body>
+</html>

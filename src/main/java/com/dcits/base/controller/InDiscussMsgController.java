@@ -20,7 +20,9 @@ public class InDiscussMsgController {
 	private InDiscussMsgServices services;
 	
 	@RequestMapping("/addInMsg")
-	public String addInMsg(Indiscussmsg msg) {
+	public String addInMsg(Indiscussmsg msg, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		msg.setUserSid(user.getSid());
 		return "{\"result\" : \"" + services.addInMsg(msg) + "\"}";
 	}
 	

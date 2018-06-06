@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>DCitsSM</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- Loading Bootstrap -->
+		<link href="css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+		<!-- Loading Flat UI -->
+		<link href="css/flat-ui.min.css" rel="stylesheet">
+		<link href="css/demo.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<form class="">
+			<div id="legend" class="">
+				<legend class="">售前工作申请表</legend>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group col-md-3 row">
+					<div class="col-md-4">
+					    <label class="control-label">申请人:</label>
+					</div>
+				    <div class="col-md-7">
+						<input name="proposer" type="text" class="form-control" placeholder="申请人">								    	
+				   </div>
+				</div>
+				<div class="form-group col-md-3">
+					<select id="preSalesType" class="form-control select select-primary" data-toggle="select">
+
+					</select>
+				</div>
+				<div class="form-group col-md-3">
+					<select id="proposerDepartment" class="form-control select select-primary" data-toggle="select">
+
+					</select>
+				</div>
+			</div>
+			<div class="col-md-12" style="padding-top: 10px;">
+				<div class="form-group col-md-6 row">
+					<div class="col-md-2">
+					    <label class="control-label">申请日期:</label>
+					</div>
+				    <div class="col-md-10">
+						<input name="applicationDate" type="text" class="form-control" placeholder="申请日期">								    	
+				   </div>
+				</div>
+				<div class="form-group col-md-6 row">
+					<div class="col-md-3">
+					    <label class="control-label">计划交流时间:</label>
+					</div>
+				    <div class="col-md-9">
+						<input name="aimTime" type="text" class="form-control" placeholder="计划交流时间">								    	
+				   </div>
+				</div>
+			</div>
+			<div class="col-md-12" style="padding-top: 10px;">
+				<div class="form-group col-md-6 row">
+					<div class="col-md-2">
+					    <label class="control-label">交流单位:</label>
+					</div>
+				    <div class="col-md-10">
+						<input name="aimUnit" type="text" class="form-control inpu" placeholder="交流单位">								    	
+				   </div>
+				</div>
+				<div class="form-group col-md-6 row">
+					<div class="col-md-3">
+					    <label class="control-label">交流地点:</label>
+					</div>
+				    <div class="col-md-9">
+						<input name="aimLocation" type="text" class="form-control" placeholder="交流地点">								    	
+				   </div>
+				</div>
+			</div>
+			<div class="col-md-12" style="padding-top: 10px;">
+				<div class="form-group col-md-4 row">
+					<div class="col-md-4">
+					    <label class="control-label">交流部门:</label>
+					</div>
+				    <div class="col-md-8">
+						<input name="aimDepartment" type="text" class="form-control" placeholder="交流部门">								    	
+				   </div>
+				</div>
+				<div class="form-group col-md-4 row">
+					<div class="col-md-4">
+					    <label class="control-label">客户接洽人:</label>
+					</div>
+				    <div class="col-md-8">
+						<input name="clientInterface" type="text" class="form-control" placeholder="客户接洽人">								    	
+				   </div>
+				</div>
+				<div class="form-group col-md-4 row">
+					<div class="col-md-4">
+					    <label class="control-label">接洽人职务:</label>
+					</div>
+				    <div class="col-md-8">
+						<input name="clientDuty" type="text" class="form-control" placeholder="接洽人职务">								    	
+				   </div>
+				</div>
+			</div>
+
+			<div class="control-group col-md-12">
+				<div class="form-group">
+					<label class="control-label">客户背景</label>
+					<div class="controls">
+						<div class="textarea">
+							<textarea id="clientBack" type="" class="form-control"></textarea>
+						</div>
+					</div>					
+				</div>
+			</div>
+			<div class="control-group col-md-12">
+				<div class="form-group">
+					<label class="control-label">交流目标</label>
+					<div class="controls">
+						<div class="textarea">
+							<textarea id="aimPurpose" type="" class="form-control"></textarea>
+						</div>
+					</div>					
+				</div>
+			</div>
+			<div class="control-group col-md-12 row">
+				<div class="col-md-6" style="text-align: right;">
+					<button class="btn btn-primary" onclick="javascript :history.back(-1);">返回</button>
+				</div>
+				<div class="col-md-6">
+					<button class="btn btn-primary" id="addPreMsgOK">提交</button>
+				</div>
+			</div>
+		</form>
+		<!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+		<script src="js/vendor/jquery.min.js"></script>
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="js/vendor/video.js"></script>
+		<script src="js/flat-ui.min.js"></script>
+		<script src="js/application.js"></script>
+		<script type="text/javascript">
+			$.ajax({
+		    	url : "/getTaskTypes",
+		    	type : "GET",
+		    	dataType : "json",
+		    	success : function(result){
+		    		//result.tasks
+		    		for(let i = 0; i < result.tasks.length; i++){
+		    			$("#preSalesType").append("<option value='" + result.tasks[i].sid + "'>" + result.tasks[i].fvalue + "</option>");
+		    		}
+		    	},
+		    	error : function(result){
+		    		alert(result);
+		    	}
+			});
+			$.ajax({
+		    	url : "/getProposerDeparts",
+		    	type : "GET",
+		    	dataType : "json",
+		    	success : function(result){
+		    		//result.departs
+		    		for(let i = 0; i < result.departs.length; i++){
+		    			$("#proposerDepartment").append("<option value='" + result.departs[i].sid + "'>" + result.departs[i].fvalue + "</option>");
+		    		}
+		    	},
+		    	error : function(result){
+		    		alert(result);
+		    	}
+			});
+			$.ajax({
+		    	url : "/aboutMe",
+		    	type : "GET",
+		    	dataType : "json",
+		    	success : function(result){
+		    		$("input[name='proposer']").val(result.name);
+		    	},
+		    	error : function(result){
+		    		alert(result);
+		    	}
+			});
+			// 对Date的扩展，将 Date 转化为指定格式的String  
+			// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，   
+			// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)   
+			Date.prototype.Format = function (fmt) { //author: meizz   
+			    var o = {  
+			        "M+": this.getMonth() + 1, //月份   
+			        "d+": this.getDate(), //日   
+			        "H+": this.getHours(), //小时   
+			        "m+": this.getMinutes(), //分   
+			        "s+": this.getSeconds(), //秒   
+			        "q+": Math.floor((this.getMonth() + 3) / 3), //季度   
+			        "S": this.getMilliseconds() //毫秒   
+			    };  
+			    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));  
+			    for (var k in o)  
+			    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));  
+			    return fmt;  
+			} 
+			$("input[name='applicationDate']").val(new Date().Format("yyyy-MM-dd"));
+		</script>
+		<script type="text/javascript">
+			$("#addPreMsgOK").click(function(){
+				$.ajax({
+			    	url : "/addPreMsg",
+			    	type : "GET",
+			    	dataType : "json",
+			    	data : {
+			    		"proposer" : $("input[name='proposer']").val(),
+			    		"applicationDate" : new Date($("input[name='applicationDate']").val()),
+			    		"aimTime" : $("input[name='aimTime']").val(),
+			    		"aimUnit" : $("input[name='aimUnit']").val(),
+			    		"aimLocation" : $("input[name='aimLocation']").val(),
+			    		"aimDepartment" : $("input[name='aimDepartment']").val(),
+			    		"clientInterface" : $("input[name='clientInterface']").val(),
+			    		"clientDuty" : $("input[name='clientDuty']").val(),
+			    		"preSalesType" : $("#preSalesType option:selected").text(),
+			    		"proposerDepartment" : $("#proposerDepartment option:selected").text(),
+			    		"clientBack" : $("#clientBack").val(),
+			    		"aimPurpose" : $("#aimPurpose").val()
+			    	},
+			    	success : function(result){
+			    		history.back(-1);
+			    	},
+			    	error : function(result){
+			    		alert(result);
+			    	}
+				});
+			});
+		
+		</script>
+	</body>
+
+</html>

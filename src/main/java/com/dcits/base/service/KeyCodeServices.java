@@ -20,7 +20,7 @@ public class KeyCodeServices {
 		KeycodeExample example = new KeycodeExample();
 		Criteria createCriteria = example.createCriteria();
 		createCriteria.andFtypeEqualTo(ftype);
-		return keyCodeMapper.selectByExample(example );
+		return keyCodeMapper.selectByExample(example);
 	}
 
 	public List<Keycode> getTaskTypes() {
