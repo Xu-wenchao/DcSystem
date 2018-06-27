@@ -63,14 +63,14 @@
 		    		"password" : password
 		    	},
 		    	success : function(result){
-		        	if(JSON.stringify(result) == "true"){
+		        	if(result.result == "1"){
 			        	window.location.href = "/index.html";
 		        	}else{
 		        		alert("用户名或者密码错误");
 		        	}
 		    	},
 		    	error : function(result){
-		    		alert("e" + JSON.stringify(result));
+		    		alert("e" + result.result);
 		    	}
 		    });
 		});

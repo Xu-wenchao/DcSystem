@@ -31,6 +31,7 @@ public class UserServices {
 		UserExample ue = new UserExample();
 		Criteria criteria = ue.createCriteria();
 		criteria.andItcodeEqualTo(userName);
+		criteria.andOtherEqualTo("0");
 		criteria.andPasswordEqualTo(DigestUtils.md5Hex(password));
 		List<User> users = userMapper.selectByExample(ue);
 		return users != null && users.size() > 0 ? users.get(0) : null;

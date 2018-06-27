@@ -28,14 +28,16 @@ public class UserController {
 	private MyMapper myMapper;
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public Boolean login(String name, String password, HttpSession session) {
+	public String login(String name, String password, HttpSession session) {
 		User user = userServices.login(name, password);
-		HashMap<String, Object> role = myMapper.getRole(user.getSid());
-		List<HashMap<String, String>> menus = myMapper.getMenus((Integer)role.get("sid"));
-		session.setAttribute("user", user);
-		session.setAttribute("role", role.get("role_name"));
-		session.setAttribute("menus", menus);
-		return user != null;
+		if(user != null) {
+			HashMap<String, Object> role = myMapper.getRole(user.getSid());
+			List<HashMap<String, String>> menus = myMapper.getMenus((Integer)role.get("sid"));
+			session.setAttribute("user", user);
+			session.setAttribute("role", role.get("role_name"));
+			session.setAttribute("menus", menus);
+		}
+		return "{\"result\" : \"" + ((user != null) ? "1" : "0") + "\"}";
 	}
 	
 	@RequestMapping(value = "/addUser")
