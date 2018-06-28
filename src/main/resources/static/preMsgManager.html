@@ -37,7 +37,9 @@
 			  		<th>申请日期</th>
 			  		<th>交流单位</th>
 			  		<th>客户接洽人</th>
-			  		<th>&nbsp;&nbsp;&nbsp;&nbsp;操作</th>
+			  		<th>&nbsp;&nbsp;&nbsp;&nbsp;查看</th>
+			  		<th>&nbsp;&nbsp;&nbsp;&nbsp;删除</th>
+			  		<th>&nbsp;&nbsp;&nbsp;&nbsp;指派</th>
 			  	</tr>
 			</table>
 
@@ -140,6 +142,28 @@
 			    	}				
 				});
 	    	}
+			function changePreMsgPerson(that, msgSid){
+				let txt = that.options[that.selectedIndex].text;
+				$.ajax({
+			    	url : "/alterPreMsgProfessional",
+			    	type : "GET",
+			    	dataType : "json",
+			    	data : {
+			    		"sid" : msgSid,
+						"remark" : txt
+			    	},
+			    	success : function(result){
+						if(result.result == "1"){
+							
+						}else{
+							alert("网络问题，指派失败");
+						}
+			    	},
+			    	error : function(result){
+			    		alert(result.result);
+			    	}
+				});
+			}
 	    </script>
 	    <script type="text/javascript">
 	    	function refresh(){
@@ -158,17 +182,41 @@
 			    			$tr += '<td style="vertical-align: middle;">' + result.preMsgs[i].applicationDate.substr(0,10) + '</td>';
 			    			$tr += '<td style="vertical-align: middle;">' + result.preMsgs[i].aimUnit + '</td>';
 			    			$tr += '<td style="vertical-align: middle;">' + result.preMsgs[i].clientInterface + '</td>';
-					  		$tr += '<td><button class="btn btn-sm btn-success" onclick="look(' + result.preMsgs[i].sid + ')">查看</button></td>';
-			    			$tr += "</tr>";
+					  		$tr += '<td><button class="btn btn-success" onclick="look(' + result.preMsgs[i].sid + ')">查看</button></td>';
+					  		$tr += '<td><button class="btn btn-danger">删除</button></td>';
+					  		
+					  		if(result.powerMan == "1"){
+			    				$tr += '<td><select id="personType" class="form-control select select-primary" data-toggle="select"' 
+			    					+ ' onchange="changePreMsgPerson(this, ' + result.preMsgs[i].sid + ');">';
+			    				$tr += '<option selected>' + result.preMsgs[i].remark + '</option>';
+			    				for(let j = 0; j < result.users.length; j++){
+			    					if(result.users[j].name != result.preMsgs[i].remark){
+			    						$tr += '<option>' + result.users[j].name + '|' + result.users[j].itcode + '</option>';
+			    					}
+			    				}
+			    				$tr += '</select></td>';
+			    			}else{
+						  		$tr += '<td><button class="btn btn-sm btn-success">' + result.preMsgs[i].remark + '</button></td>';
+			    			}
+			    			
+					  		$tr += "</td>";
 			    			$("#userList").append($tr);
 			    		}
+					    if ($('[data-toggle="select"]').length) {
+						      $('[data-toggle="select"]').select2();
+						}
+			    		
 			    	},
 			    	error : function(result){
 			    		alert(JSON.stringify(result));
 			    	}				
 				});
 	    	}
-	    	refresh();
+	    	$(document).ready(function(){
+		    	refresh();
+	    		
+	    	});
+
 	    </script>
 		<script type="text/javascript">
 			//addPreMsg

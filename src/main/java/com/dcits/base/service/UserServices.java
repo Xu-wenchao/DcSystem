@@ -87,6 +87,18 @@ public class UserServices {
 		
 		return userMapper.selectByExample(example);
 	}
+
+	public User selectAUserByItcode(String itcode) {
+		UserExample example = new UserExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andOtherNotEqualTo("1");
+		criteria.andItcodeEqualTo(itcode);
+		try {
+			return userMapper.selectByExample(example).get(0);			
+		}catch (Exception e) {
+			return null;
+		}
+	}
 }
 
 

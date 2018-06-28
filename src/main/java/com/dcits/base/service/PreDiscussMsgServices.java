@@ -4,20 +4,32 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.dcits.base.mapper.IndiscussmsgMapper;
 import com.dcits.base.mapper.KeycodeMapper;
 import com.dcits.base.mapper.PrediscussmsgMapper;
+import com.dcits.base.mapper.UserMapper;
+import com.dcits.base.pojo.Indiscussmsg;
+import com.dcits.base.pojo.IndiscussmsgExample;
 import com.dcits.base.pojo.Keycode;
 import com.dcits.base.pojo.KeycodeExample;
 import com.dcits.base.pojo.KeycodeExample.Criteria;
 import com.dcits.base.pojo.Prediscussmsg;
 import com.dcits.base.pojo.PrediscussmsgExample;
+import com.dcits.base.pojo.User;
 
 @Service
 public class PreDiscussMsgServices {
 
 	@Autowired
 	private PrediscussmsgMapper preDiscussMsgMapper;
+	
+	@Autowired
+	private IndiscussmsgMapper inDiscussMsgMapper;
+	
+	@Autowired
+	private UserServices userServices;
 	
 
 	public Prediscussmsg getPreMsgBySid(int sid) {
@@ -43,6 +55,33 @@ public class PreDiscussMsgServices {
 		createCriteria.andSidEqualTo(record.getSid());
 		createCriteria.andUserIdEqualTo(record.getUserId());
 		return preDiscussMsgMapper.updateByExample(record, example);
+	}
+	
+	@Transactional
+	public int alterPreMsgProfessionalBySid(Prediscussmsg record) {
+		PrediscussmsgExample example = new PrediscussmsgExample();
+		com.dcits.base.pojo.PrediscussmsgExample.Criteria createCriteria = example.createCriteria();
+		createCriteria.andSidEqualTo(record.getSid());
+		if(preDiscussMsgMapper.updateByExampleSelective(record, example) > 0) {
+			//先删掉
+			IndiscussmsgExample iex = new IndiscussmsgExample();
+			com.dcits.base.pojo.IndiscussmsgExample.Criteria createCriteria2 = iex.createCriteria();
+			createCriteria2.andPdmSidEqualTo(record.getSid());
+			inDiscussMsgMapper.deleteByExample(iex);
+			//再赋值
+			String[] strs = record.getRemark().split("\\|");
+			if(strs.length == 2) {//指派了人员
+				User user = userServices.selectAUserByItcode(strs[1]);
+				
+				Indiscussmsg ird = new Indiscussmsg();
+				ird.setPdmSid(record.getSid());
+				ird.setUserSid(user.getSid());
+				ird.setDiscussProficient(user.getName());
+				return inDiscussMsgMapper.insert(ird);				
+			}
+			return 1;
+		}
+		return 0;
 	}
 	
 	public int addPreMsg(Prediscussmsg msg) {

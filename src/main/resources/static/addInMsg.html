@@ -108,6 +108,28 @@
 		<script src="js/vendor/video.js"></script>
 		<script src="js/flat-ui.min.js"></script>
 		<script src="js/application.js"></script>
+		<script type="text/javascript">
+			$.ajax({
+		    	url : "/aboutMe",
+		    	type : "GET",
+		    	dataType : "json",
+		    	success : function(result){
+		    		$("input[name='discussProficient']").val(result.name);
+		    	},
+		    	error : function(result){
+		    		alert(result);
+		    	}
+			});
+		</script>
+		<script type="text/javascript">
+			function getQueryString(name) { 
+		        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+		        var r = window.location.search.substr(1).match(reg); 
+		        if (r != null) return unescape(r[2]); 
+		        return null; 
+		    }  
+			alert(getQueryString('preMsgSid'));
+		</script>
 	</body>
 
 </html>
