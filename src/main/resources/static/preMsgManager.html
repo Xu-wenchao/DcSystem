@@ -37,8 +37,9 @@
 			  		<th>申请日期</th>
 			  		<th>交流单位</th>
 			  		<th>客户接洽人</th>
-			  		<th>&nbsp;&nbsp;&nbsp;&nbsp;查看</th>
+			  		<th>&nbsp;&nbsp;&nbsp;&nbsp;基本信息</th>
 			  		<th>&nbsp;&nbsp;&nbsp;&nbsp;删除</th>
+			  		<th>&nbsp;&nbsp;&nbsp;&nbsp;反馈信息</th>
 			  		<th>&nbsp;&nbsp;&nbsp;&nbsp;指派</th>
 			  	</tr>
 			</table>
@@ -66,6 +67,28 @@
 		  </div>
 		</div>
 		<a id="showAMsg" data-toggle="modal" data-target="#addUserModal" hidden="hidden"></a>
+
+		<div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="resultModalLabel">信息表</h4>
+		      </div>
+		      <div class="modal-body">
+		      		<div class="row">
+						<form class="form-horizontal" id="resultMsgForm">
+						
+						</form>	      			
+		      		</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" id="resultCloseBtn" class="btn btn-default" data-dismiss="modal">关闭</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<a id="showResultMsg" data-toggle="modal" data-target="#resultModal" hidden="hidden"></a>
 	    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
 	    <script src="js/vendor/jquery.min.js"></script>
 	    <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -111,11 +134,23 @@
 	    			case "aimPurpose":
 	    				return "交流目标：";
 	    				break;
+	    			case "preSalesSummarize":
+	    				return "售前人员总结：";
+	    				break;
+	    			case "clientBackSummarize":
+	    				return "客户反馈信息：";
+	    				break;
+	    			case "preSalesComment":
+	    				return "总体评价：";
+	    				break;
 	    			default:
 	    				return "：";
 	    				break;
 	    		}
 	    	}
+	    	
+	    	
+	    	//查看售前信息
 	    	function look(sid){
 				$.ajax({
 			    	url : "/getPreMsg",
@@ -125,6 +160,7 @@
 			    		"sid" : sid
 			    	},
 			    	success : function(result){
+			    		$("#aMsgForm").empty();
 			    		for(let key in result){
 			    			if(key == "sid" || key == "userId" || key == "remark"){
 			    				continue;
@@ -142,6 +178,36 @@
 			    	}				
 				});
 	    	}
+	    	//查看反馈信息
+	    	function lookresult(preResultSid){
+				$.ajax({
+			    	url : "/getBackMsgByPre",
+			    	type : "GET",
+			    	dataType : "json",
+			    	data : {
+			    		"pdm_sid" : preResultSid
+			    	},
+			    	success : function(result){
+			    		$("#resultMsgForm").empty();
+			    		for(let key in result){
+			    			if(key == "sid" || key == "pdmSid" || key == "userSid" || key == "remark"){
+			    				continue;
+			    			}
+			    			let $lab = '<div class="form-group">';
+						    $lab += '<label class="col-md-3 control-label">' + map(key) + '</label>';
+						    $lab += '<label class="col-md-8 control-label" style="text-align: left;">' + result[key] + '</label>';
+			    			$lab += "</div>";
+				    		$("#resultMsgForm").append($lab);
+			    		}
+			    		$("#showResultMsg").click();
+			    	},
+			    	error : function(result){
+			    		alert(JSON.stringify(result));
+			    	}				
+				});
+	    	}
+	    	
+	    	//改变指派人
 			function changePreMsgPerson(that, msgSid){
 				let txt = that.options[that.selectedIndex].text;
 				$.ajax({
@@ -165,6 +231,11 @@
 				});
 			}
 	    </script>
+	    <script>
+	    	function operresult(preMsgSid){
+	    		$(location).attr('href', 'addBackMsg.html?preMsgSid=' + preMsgSid);
+	    	}
+	    </script>
 	    <script type="text/javascript">
 	    	function refresh(){
 				$.ajax({
@@ -186,6 +257,7 @@
 					  		$tr += '<td><button class="btn btn-danger">删除</button></td>';
 					  		
 					  		if(result.powerMan == "1"){
+						  		$tr += '<td><button class="btn btn-primary" onclick="lookresult(' + result.preMsgs[i].sid + ')">查看</button></td>';
 			    				$tr += '<td><select id="personType" class="form-control select select-primary" data-toggle="select"' 
 			    					+ ' onchange="changePreMsgPerson(this, ' + result.preMsgs[i].sid + ');">';
 			    				$tr += '<option selected>' + result.preMsgs[i].remark + '</option>';
@@ -196,7 +268,8 @@
 			    				}
 			    				$tr += '</select></td>';
 			    			}else{
-						  		$tr += '<td><button class="btn btn-sm btn-success">' + result.preMsgs[i].remark + '</button></td>';
+						  		$tr += '<td><button class="btn btn-primary" onclick="operresult(' + result.preMsgs[i].sid + ')">修改</button></td>';
+						  		$tr += '<td>' + result.preMsgs[i].remark + '</td>';
 			    			}
 			    			
 					  		$tr += "</td>";

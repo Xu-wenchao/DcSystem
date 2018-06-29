@@ -42,4 +42,14 @@ public class BackDiscussMsgController {
 	public Backdiscussmsg getBackMsgs(Integer sid){
 		return services.getBackMsgBySid(sid);
 	}
+
+	@RequestMapping("/alterBackMsgByPre")
+	public String alterBackMsgByPre(Backdiscussmsg record, HttpSession session) {
+		return "{\"result\" : \"" + services.alterBackMsgByPreSid(record) + "\"}";		
+	}
+	
+	@RequestMapping("/getBackMsgByPre")
+	public Backdiscussmsg getBackMsgsByPre(Integer sid){
+		return services.getBackMsgByPreSid(sid);
+	}
 }

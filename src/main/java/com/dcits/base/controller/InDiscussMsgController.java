@@ -28,7 +28,9 @@ public class InDiscussMsgController {
 	
 	@RequestMapping("/alterInMsg")
 	public String alterInMsg(Indiscussmsg record, HttpSession session) {
-		record.setUserSid(((User)session.getAttribute("user")).getSid());
+		Indiscussmsg inMsg = services.getInMsgBySid(record.getSid());
+		record.setUserSid(inMsg.getUserSid());
+		record.setPdmSid(inMsg.getPdmSid());
 		return "{\"result\" : \"" + services.alterInMsgBySid(record) + "\"}";		
 	}
 	

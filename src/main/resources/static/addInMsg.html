@@ -34,7 +34,7 @@
 					    <label class="control-label">实际交流日期:</label>
 					</div>
 				    <div class="col-md-9">
-						<input name="discussTime" type="text" class="form-control" placeholder="实际交流日期">								    	
+						<input name="discussTime" type="text" class="form-control" placeholder="实际交流日期">
 				   </div>
 				</div>
 			</div>
@@ -44,7 +44,7 @@
 					    <label class="control-label">交流方式:</label>
 					</div>
 				    <div class="col-md-10">
-						<input name="discussWay" type="text" class="form-control inpu" placeholder="交流方式">								    	
+						<input name="discussWay" type="text" class="form-control inpu" placeholder="交流方式">					    							    	
 				   </div>
 				</div>
 				<div class="form-group col-md-6 row">
@@ -78,7 +78,7 @@
 				<div class="form-group">
 					<label class="control-label">参与部门/人员</label>
 		          	<div class="tagsinput-primary">
-		            	<input name="tagsinput" class="tagsinput" data-role="tagsinput" value="School, Teacher, Colleague" />
+		            	<input name="apartmentPerson" class="tagsinput" data-role="tagsinput" value="" />
 		          	</div>
 			
 				</div>
@@ -88,17 +88,17 @@
 					<label class="control-label">交流情况</label>
 					<div class="controls">
 						<div class="textarea">
-							<textarea name="discussResult" type="" class="form-control"> </textarea>
+							<textarea id="discussResult" type="" class="form-control"> </textarea>
 						</div>
 					</div>					
 				</div>
 			</div>
 			<div class="control-group col-md-12 row">
 				<div class="col-md-6" style="text-align: right;">
-					<button class="btn btn-primary">返回</button>
+					<button class="btn btn-primary" onclick="javascript :history.back(-1);">返回</button>
 				</div>
 				<div class="col-md-6">
-					<button class="btn btn-primary">提交</button>
+					<button class="btn btn-primary" id="alterInMsgOK">提交</button>
 				</div>
 			</div>
 		</form>
@@ -128,7 +128,57 @@
 		        if (r != null) return unescape(r[2]); 
 		        return null; 
 		    }  
-			alert(getQueryString('preMsgSid'));
+			$("#alterInMsgOK").click(function(e){
+				//阻止表单提交
+				e.preventDefault();
+				$.ajax({
+			    	url : "/alterInMsg",
+			    	type : "POST",
+			    	dataType : "json",
+			    	data : {
+			    		"sid" : getQueryString('inMsgSid'),
+			    		"discussProficient" : $("input[name='discussProficient']").val(),
+			    		"discussTime" : $("input[name='discussTime']").val(),
+			    		"discussWay" : $("input[name='discussWay']").val(),
+			    		"preSalesDays" : $("input[name='preSalesDays']").val(),
+			    		"discussFile" : $("input[name='discussFile']").val(),
+			    		"reimbursementAmount" : $("input[name='reimbursementAmount']").val(),
+			    		"apartmentPerson" : $("input[name='apartmentPerson']").val(),
+			    		"discussResult" : $("#discussResult").val()
+			    	},
+			    	success : function(result){
+			    		$(location).attr('href', 'inMsgManager.html');
+			    	},
+			    	error : function(result){
+			    		alert(JSON.stringify(result));
+			    	}
+				});
+			});
+
+			$(document).ready(function(){
+				$.ajax({
+			    	url : "/getInMsg",
+			    	type : "GET",
+			    	dataType : "json",
+			    	data : {
+			    		"sid" : getQueryString('inMsgSid')
+			    	},
+			    	success : function(result){
+			    		$("input[name='discussProficient']").val(result.discussProficient);
+			    		$("input[name='discussTime']").val(result.discussTime);
+			    		$("input[name='discussWay']").val(result.discussWay);
+			    		$("input[name='preSalesDays']").val(result.preSalesDays);
+			    		$("input[name='discussFile']").val(result.discussFile);
+			    		$("input[name='reimbursementAmount']").val(result.reimbursementAmount);
+			    		$("input[name='apartmentPerson']").tagsinput('add', result.apartmentPerson);
+			    		$("#discussResult").val(result.discussResult);
+			    	},
+			    	error : function(result){
+			    		alert("getInMsg:" + JSON.stringify(result));
+			    	}
+				});
+			});
+		
 		</script>
 	</body>
 

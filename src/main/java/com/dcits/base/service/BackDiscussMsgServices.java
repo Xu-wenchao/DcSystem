@@ -44,4 +44,19 @@ public class BackDiscussMsgServices {
 	public int addBackMsg(Backdiscussmsg msg) {
 		return backDiscussMsgMapper.insert(msg);
 	}
+
+	public Backdiscussmsg getBackMsgByPreSid(Integer sid) {
+		BackdiscussmsgExample example = new BackdiscussmsgExample();
+		Criteria createCriteria = example.createCriteria();
+		createCriteria.andPdmSidEqualTo(sid);
+		List<Backdiscussmsg> selectByExample = backDiscussMsgMapper.selectByExample(example);
+		return selectByExample.size() > 0 ? selectByExample.get(0) : null;
+	}
+
+	public int alterBackMsgByPreSid(Backdiscussmsg record) {
+		BackdiscussmsgExample example = new BackdiscussmsgExample();
+		Criteria createCriteria = example.createCriteria();
+		createCriteria.andPdmSidEqualTo(record.getPdmSid());
+		return backDiscussMsgMapper.updateByExampleSelective(record, example);
+	}
 }

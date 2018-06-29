@@ -65,8 +65,7 @@ public class PreDiscussMsgController {
 			map.put("preMsgs", services.getPreMsgsByUserSid(userSid));			
 		}else if(roleName.equals("专家")){
 			//map.put("preMsgs", services.getPreMsgBy(sid));
-			List<Indiscussmsg> inMsgsByUserSid = inDiscussMsgServices.getInMsgsByUserSid(userSid);
-			
+			map.put("inMsgs", inDiscussMsgServices.getInMsgsByUserSid(userSid));			
 		}else { //销售人员
 			map.put("preMsgs", services.getPreMsgsByUserSid(userSid));			
 		}

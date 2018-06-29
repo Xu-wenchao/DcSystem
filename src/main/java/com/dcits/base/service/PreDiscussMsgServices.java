@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dcits.base.mapper.BackdiscussmsgMapper;
 import com.dcits.base.mapper.IndiscussmsgMapper;
 import com.dcits.base.mapper.KeycodeMapper;
 import com.dcits.base.mapper.PrediscussmsgMapper;
 import com.dcits.base.mapper.UserMapper;
+import com.dcits.base.pojo.Backdiscussmsg;
+import com.dcits.base.pojo.BackdiscussmsgExample;
 import com.dcits.base.pojo.Indiscussmsg;
 import com.dcits.base.pojo.IndiscussmsgExample;
 import com.dcits.base.pojo.Keycode;
@@ -27,6 +30,9 @@ public class PreDiscussMsgServices {
 	
 	@Autowired
 	private IndiscussmsgMapper inDiscussMsgMapper;
+	
+	@Autowired
+	private BackdiscussmsgMapper backDiscussMsgMapper;
 	
 	@Autowired
 	private UserServices userServices;
@@ -68,6 +74,12 @@ public class PreDiscussMsgServices {
 			com.dcits.base.pojo.IndiscussmsgExample.Criteria createCriteria2 = iex.createCriteria();
 			createCriteria2.andPdmSidEqualTo(record.getSid());
 			inDiscussMsgMapper.deleteByExample(iex);
+			
+			BackdiscussmsgExample bex = new BackdiscussmsgExample();
+			com.dcits.base.pojo.BackdiscussmsgExample.Criteria createCriteria3 = bex.createCriteria();
+			createCriteria3.andPdmSidEqualTo(record.getSid());
+			backDiscussMsgMapper.deleteByExample(bex);
+			
 			//再赋值
 			String[] strs = record.getRemark().split("\\|");
 			if(strs.length == 2) {//指派了人员
@@ -77,6 +89,12 @@ public class PreDiscussMsgServices {
 				ird.setPdmSid(record.getSid());
 				ird.setUserSid(user.getSid());
 				ird.setDiscussProficient(user.getName());
+				
+				Backdiscussmsg brd = new Backdiscussmsg();
+				brd.setPdmSid(record.getSid());
+				brd.setUserSid(record.getUserId());
+				backDiscussMsgMapper.insert(brd);
+				
 				return inDiscussMsgMapper.insert(ird);				
 			}
 			return 1;

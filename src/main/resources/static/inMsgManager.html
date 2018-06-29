@@ -31,13 +31,11 @@
 			<table class="table table-hover" id='userList'>
 			  	<tr>
 			  		<th>#</th>
-			  		<th>申请人</th>
-			  		<th>售前任务类型</th>
-			  		<th>申请日期</th>
-			  		<th>交流单位</th>
-			  		<th>客户接洽人</th>
-			  		<th>查看</th>
-			  		<th>交流过程</th>
+			  		<th>讨论专家</th>
+			  		<th>讨论时间</th>
+			  		<th>讨论方式</th>
+			  		<th>售前信息</th>
+			  		<th>讨论过程信息</th>
 			  	</tr>
 			</table>
 
@@ -123,6 +121,7 @@
 			    		"sid" : sid
 			    	},
 			    	success : function(result){
+			    		$("#aMsgForm").empty();
 			    		for(let key in result){
 			    			if(key == "sid" || key == "userId" || key == "remark"){
 			    				continue;
@@ -143,8 +142,8 @@
 
 	    </script>
 	    <script type="text/javascript">
-	    	function addInMsg(preMsgSid){
-				$(location).attr('href', 'addInMsg.html?preMsgSid=' + preMsgSid);
+	    	function addInMsg(inMsgSid){
+				$(location).attr('href', 'addInMsg.html?inMsgSid=' + inMsgSid);
 	    	}
 	    </script>
 	    <script type="text/javascript">
@@ -156,16 +155,14 @@
 			    	success : function(result){
 			    		//result.users	    		
 			    		let sw = ['active', 'success', 'warning', 'danger', 'info'];
-			    		for(let i = 0; i < result.preMsgs.length; i++){
+			    		for(let i = 0; i < result.inMsgs.length; i++){
 			    			let $tr = "<tr class='" + sw[i % 5] + "'>";
 			    			$tr += '<td style="vertical-align: middle;">' + (i + 1) + '</td>';
-			    			$tr += '<td style="vertical-align: middle;">' + result.preMsgs[i].proposer + '</td>';
-			    			$tr += '<td style="vertical-align: middle;">' + result.preMsgs[i].preSalesType + '</td>';
-			    			$tr += '<td style="vertical-align: middle;">' + result.preMsgs[i].applicationDate.substr(0,10) + '</td>';
-			    			$tr += '<td style="vertical-align: middle;">' + result.preMsgs[i].aimUnit + '</td>';
-			    			$tr += '<td style="vertical-align: middle;">' + result.preMsgs[i].clientInterface + '</td>';
-					  		$tr += '<td><button class="btn btn-success" onclick="look(' + result.preMsgs[i].sid + ')">查看</button></td>';
-					  		$tr += '<td><button class="btn btn-success" onclick="addInMsg(' + result.preMsgs[i].sid + ')">交流过程信息</button></td>';
+			    			$tr += '<td style="vertical-align: middle;">' + result.inMsgs[i].discussProficient + '</td>';
+			    			$tr += '<td style="vertical-align: middle;">' + result.inMsgs[i].discussTime + '</td>';
+			    			$tr += '<td style="vertical-align: middle;">' + result.inMsgs[i].discussWay + '</td>';
+					  		$tr += '<td><button class="btn btn-success" onclick="look(' + result.inMsgs[i].pdmSid + ')">查看</button></td>';
+					  		$tr += '<td><button class="btn btn-success" onclick="addInMsg(' + result.inMsgs[i].sid + ')">修改</button></td>';
 					  		$tr += '</tr>';
 			    			$("#userList").append($tr);
 			    		}
