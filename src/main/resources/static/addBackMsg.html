@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>DCitsSM</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- Loading Bootstrap -->
+		<link href="css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+		<!-- Loading Flat UI -->
+		<link href="css/flat-ui.min.css" rel="stylesheet">
+		<link href="css/demo.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<form class="">
+			<div id="legend" class="">
+				<legend class="">售前信息反馈表</legend>
+			</div>
+			<div class="control-group col-md-12">
+				<div class="form-group">
+					<label class="control-label">售前效果评价</label>
+					<div class="controls">
+						<div class="col-md-6" id="preSalesCommentDiv">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="control-group col-md-12">
+				<div class="form-group">
+					<label class="control-label">售前人员总结</label>
+					<div class="controls">
+						<div class="textarea">
+							<textarea id="preSalesSummarize" type="" class="form-control"> </textarea>
+						</div>
+					</div>					
+				</div>
+			</div>
+			<div class="control-group col-md-12">
+				<div class="form-group">
+					<label class="control-label">客户反馈信息</label>
+					<div class="controls">
+						<div class="textarea">
+							<textarea id="clientBackSummarize" type="" class="form-control"> </textarea>
+						</div>
+					</div>					
+				</div>
+			</div>
+			<div class="control-group col-md-12 row">
+				<div class="col-md-6" style="text-align: right;">
+					<button class="btn btn-primary" onclick="javascript :history.back(-1);">返回</button>
+				</div>
+				<div class="col-md-6">
+					<button class="btn btn-primary" id="alterBackMsgOK">提交</button>
+				</div>
+			</div>
+		</form>
+		<!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+		<script src="js/vendor/jquery.min.js"></script>
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="js/vendor/video.js"></script>
+		<script src="js/flat-ui.min.js"></script>
+		<script src="js/application.js"></script>
+		<script type="text/javascript">
+		function getQueryString(name) { 
+	        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+	        var r = window.location.search.substr(1).match(reg); 
+	        if (r != null) return unescape(r[2]); 
+	        return null; 
+	    }  
+		$("#alterBackMsgOK").click(function(e){
+			//阻止表单提交
+			e.preventDefault();
+			$.ajax({
+		    	url : "/alterBackMsgByPre",
+		    	type : "POST",
+		    	dataType : "json",
+		    	data : {
+		    		"pdmSid" : getQueryString('preMsgSid'),
+		    		"preSalesSummarize" : $("#preSalesSummarize").val(),
+		    		"clientBackSummarize" : $("#clientBackSummarize").val(),
+		    		"preSalesComment" : $("#preSalesComment option:selected").text()
+		    	},
+		    	success : function(result){
+		    		$(location).attr('href', 'preMsgManager.html');
+		    	},
+		    	error : function(result){
+		    		alert(JSON.stringify(result));
+		    	}
+			});
+		});
+
+		$(document).ready(function(){
+			$.ajax({
+		    	url : "/getBackMsgByPre",
+		    	type : "GET",
+		    	dataType : "json",
+		    	data : {
+		    		"sid" : getQueryString('preMsgSid')
+		    	},
+		    	success : function(result){
+		    		$("#preSalesSummarize").val(result.preSalesSummarize);
+		    		$("#clientBackSummarize").val(result.clientBackSummarize);
+					$.ajax({
+				    	url : "/getResultTypes",
+				    	type : "GET",
+				    	dataType : "json",
+				    	success : function(res){
+				    		//result.results
+				    		//$("#preSalesComment").append("<option selected>" + result.preSalesComment + "</option>");
+				    		$select = '<select id="preSalesComment" class="form-control select select-primary" data-toggle="select">';
+							$select += "<option selected>" + result.preSalesComment + "</option>";
+				    		for(let i = 0; i < res.results.length; i++){
+				    			if(res.results[i].fvalue != result.preSalesComment){
+				    				$select += "<option value='" + res.results[i].sid + "'>" + res.results[i].fvalue + "</option>";				    				
+				    			}
+				    		}
+							$select += '</select>';
+							$("#preSalesCommentDiv").append($select);
+						    if ($('[data-toggle="select"]').length) {
+							      $('[data-toggle="select"]').select2();
+							}
+				    	},
+				    	error : function(res){
+				    		alert("尚未指派专家！");				    			
+				    	}
+					});
+		    	},
+		    	error : function(result){
+		    		alert("尚未指派专家！");	
+		    	}
+			});
+		});
+		
+		</script>
+	</body>
+
+</html>
