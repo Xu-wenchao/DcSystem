@@ -98,9 +98,14 @@
 		    	type : "GET",
 		    	dataType : "json",
 		    	data : {
-		    		"sid" : getQueryString('preMsgSid')
+		    		"pdmSid" : getQueryString('preMsgSid')
 		    	},
 		    	success : function(result){
+					if(result.sid == null){
+						alert("尚未指派专家！");
+						history.back(-1);
+						return;
+					}
 		    		$("#preSalesSummarize").val(result.preSalesSummarize);
 		    		$("#clientBackSummarize").val(result.clientBackSummarize);
 					$.ajax({
@@ -108,8 +113,6 @@
 				    	type : "GET",
 				    	dataType : "json",
 				    	success : function(res){
-				    		//result.results
-				    		//$("#preSalesComment").append("<option selected>" + result.preSalesComment + "</option>");
 				    		$select = '<select id="preSalesComment" class="form-control select select-primary" data-toggle="select">';
 							$select += "<option selected>" + result.preSalesComment + "</option>";
 				    		for(let i = 0; i < res.results.length; i++){

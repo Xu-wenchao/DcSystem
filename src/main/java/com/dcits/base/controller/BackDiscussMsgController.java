@@ -49,7 +49,8 @@ public class BackDiscussMsgController {
 	}
 	
 	@RequestMapping("/getBackMsgByPre")
-	public Backdiscussmsg getBackMsgsByPre(Integer sid){
-		return services.getBackMsgByPreSid(sid);
+	public Backdiscussmsg getBackMsgsByPre(Integer pdmSid){
+		Backdiscussmsg backMsg = services.getBackMsgByPreSid(pdmSid);
+		return backMsg == null ? new Backdiscussmsg() : backMsg;
 	}
 }
