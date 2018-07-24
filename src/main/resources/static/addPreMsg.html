@@ -199,7 +199,9 @@
 			$("input[name='applicationDate']").val(new Date().Format("yyyy-MM-dd"));
 		</script>
 		<script type="text/javascript">
-			$("#addPreMsgOK").click(function(){
+			$("#addPreMsgOK").click(function(e){
+				//阻止表单提交
+				e.preventDefault();
 				$.ajax({
 			    	url : "/addPreMsg",
 			    	type : "GET",

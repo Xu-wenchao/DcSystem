@@ -208,13 +208,14 @@
 	    	}
 	    	
 	    	//改变指派人
-			function changePreMsgPerson(that, msgSid){
+			function changePreMsgPerson(that, msgSid, userSid){
 				let txt = that.options[that.selectedIndex].text;
 				$.ajax({
 			    	url : "/alterPreMsgProfessional",
 			    	type : "GET",
 			    	dataType : "json",
 			    	data : {
+			    		"userId" : userSid,
 			    		"sid" : msgSid,
 						"remark" : txt
 			    	},
@@ -258,8 +259,9 @@
 					  		
 					  		if(result.powerMan == "1"){
 						  		$tr += '<td><button class="btn btn-primary" onclick="lookresult(' + result.preMsgs[i].sid + ')">查看</button></td>';
-			    				$tr += '<td><select id="personType" class="form-control select select-primary" data-toggle="select"' 
-			    					+ ' onchange="changePreMsgPerson(this, ' + result.preMsgs[i].sid + ');">';
+			    				//指派人
+						  		$tr += '<td><select id="personType" class="form-control select select-primary" data-toggle="select"' 
+			    					+ ' onchange="changePreMsgPerson(this, ' + result.preMsgs[i].sid + ',' + result.preMsgs[i].userId + ');">';
 			    				$tr += '<option selected>' + result.preMsgs[i].remark + '</option>';
 			    				for(let j = 0; j < result.users.length; j++){
 			    					if(result.users[j].name != result.preMsgs[i].remark){
@@ -268,7 +270,7 @@
 			    				}
 			    				$tr += '</select></td>';
 			    			}else{
-						  		$tr += '<td><button class="btn btn-primary" onclick="operresult(' + result.preMsgs[i].sid + ')">修改</button></td>';
+						  		$tr += '<td><button class="btn btn-primary" onclick="operresult(' + result.preMsgs[i].sid + ')">反馈</button></td>';
 						  		$tr += '<td>' + result.preMsgs[i].remark + '</td>';
 			    			}
 			    			
