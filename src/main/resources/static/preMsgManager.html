@@ -9,6 +9,7 @@
 	    <link href="css/flat-ui.min.css" rel="stylesheet">
 			<link href="css/demo.css" rel="stylesheet">
 	    <link rel="shortcut icon" href="img/favicon.ico">
+	    <link rel="stylesheet" href="css/style.css">
 	</head>
 	<body style="overflow-x: hidden;">
 		<div>
@@ -89,6 +90,14 @@
 		  </div>
 		</div>
 		<a id="showResultMsg" data-toggle="modal" data-target="#resultModal" hidden="hidden"></a>
+		<div class="modal-dialog fade loading" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+			<div id="facebook">
+			  <div class="bar"></div>
+			  <div class="bar"></div>
+			  <div class="bar"></div>
+			</div>
+		</div>	
+		
 	    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
 	    <script src="js/vendor/jquery.min.js"></script>
 	    <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -152,6 +161,7 @@
 	    	
 	    	//查看售前信息
 	    	function look(sid){
+	    		$(".loading").modal('show');
 				$.ajax({
 			    	url : "/getPreMsg",
 			    	type : "GET",
@@ -160,6 +170,7 @@
 			    		"sid" : sid
 			    	},
 			    	success : function(result){
+			    		$(".loading").modal('hide');
 			    		$("#aMsgForm").empty();
 			    		for(let key in result){
 			    			if(key == "sid" || key == "userId" || key == "remark"){
@@ -174,12 +185,14 @@
 			    		$("#showAMsg").click();
 			    	},
 			    	error : function(result){
+			    		$(".loading").modal('hide');
 			    		alert(JSON.stringify(result));
 			    	}				
 				});
 	    	}
 	    	//查看反馈信息
 	    	function lookresult(preResultSid){
+	    		$(".loading").modal('show');
 				$.ajax({
 			    	url : "/getBackMsgByPre",
 			    	type : "GET",
@@ -188,6 +201,7 @@
 			    		"pdmSid" : preResultSid
 			    	},
 			    	success : function(result){
+			    		$(".loading").modal('hide');
 			    		$("#resultMsgForm").empty();
 			    		for(let key in result){
 			    			if(key == "sid" || key == "pdmSid" || key == "userSid" || key == "remark"){
@@ -202,6 +216,7 @@
 			    		$("#showResultMsg").click();
 			    	},
 			    	error : function(result){
+			    		$(".loading").modal('hide');
 			    		alert(JSON.stringify(result));
 			    	}				
 				});
@@ -210,6 +225,7 @@
 	    	//改变指派人
 			function changePreMsgPerson(that, msgSid, userSid){
 				let txt = that.options[that.selectedIndex].text;
+				$(".loading").modal('show');
 				$.ajax({
 			    	url : "/alterPreMsgProfessional",
 			    	type : "GET",
@@ -220,6 +236,7 @@
 						"remark" : txt
 			    	},
 			    	success : function(result){
+			    		$(".loading").modal('hide');
 						if(result.result == "1"){
 							
 						}else{
@@ -227,6 +244,7 @@
 						}
 			    	},
 			    	error : function(result){
+			    		$(".loading").modal('hide');
 			    		alert(result.result);
 			    	}
 				});
@@ -238,6 +256,7 @@
 	    	}
 	    </script>
 	    <script type="text/javascript">
+	    	$(".loading").modal('show');
 	    	function refresh(){
 				$.ajax({
 			    	url : "/getPreMsgs",
@@ -280,9 +299,10 @@
 					    if ($('[data-toggle="select"]').length) {
 						      $('[data-toggle="select"]').select2();
 						}
-			    		
+					    $(".loading").modal('hide');
 			    	},
 			    	error : function(result){
+			    		$(".loading").modal('hide');
 			    		alert(JSON.stringify(result));
 			    	}				
 				});
