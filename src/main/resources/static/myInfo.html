@@ -10,6 +10,7 @@
 	    <link href="css/flat-ui.min.css" rel="stylesheet">
 			<link href="css/demo.css" rel="stylesheet">
 	    <link rel="shortcut icon" href="img/favicon.ico">
+	    <link rel="stylesheet" href="css/style.css">
 	</head>
 	<body scroll="no" style="overflow-x: hidden;">
   		<div class="demo-type-example">
@@ -155,7 +156,13 @@
 		    </div>
 		  </div>
 		</div>
-      		
+		<div class="modal-dialog fade loading" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+			<div id="facebook">
+			  <div class="bar"></div>
+			  <div class="bar"></div>
+			  <div class="bar"></div>
+			</div>
+		</div>	
 	    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
 	    <script src="js/vendor/jquery.min.js"></script>
 	    <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -190,6 +197,7 @@
 		</script>
 		<script type="text/javascript">
 			$("#updateMsgBtn").click(function(){
+				$(".loading").modal('show');
 				$.ajax({
 			    	url : "/updateUser",
 			    	type : "GET",
@@ -202,6 +210,7 @@
 			    		'email' : $(':input[name="email"]').val()
 			    	},
 			    	success : function(result){
+			    		$(".loading").modal('hide');
 			    		if(result.result == "1"){
 				    		$('#name').text($(':input[name="name"]').val());
 				    		$('#itcode').text($(':input[name="itcode"]').val());
@@ -213,6 +222,7 @@
 			    		}
 			    	},
 			    	error : function(result){
+			    		$(".loading").modal('hide');
 			    		alert(JSON.stringify(result));
 			    	}
 				});
@@ -228,6 +238,7 @@
 					alert("密码不能为空");
 					return;
 				}
+				$(".loading").modal('show');
 				$.ajax({
 			    	url : "/updatePwd",
 			    	type : "GET",
@@ -238,6 +249,7 @@
 			    		'newPwd' : newPwd
 			    	},
 			    	success : function(result){
+			    		$(".loading").modal('hide');
 						if(result.result == "1"){
 							$("#pwdCloseBtn").click();
 						}else{
@@ -245,6 +257,7 @@
 						}
 			    	},
 			    	error : function(result){
+			    		$(".loading").modal('hide');
 			    		alert(JSON.stringify(result));
 			    	}				
 				});

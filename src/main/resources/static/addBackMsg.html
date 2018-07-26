@@ -12,6 +12,7 @@
 		<!-- Loading Flat UI -->
 		<link href="css/flat-ui.min.css" rel="stylesheet">
 		<link href="css/demo.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/style.css">
 	</head>
 
 	<body>
@@ -57,6 +58,13 @@
 				</div>
 			</div>
 		</form>
+		<div class="modal-dialog fade loading" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+			<div id="facebook">
+			  <div class="bar"></div>
+			  <div class="bar"></div>
+			  <div class="bar"></div>
+			</div>
+		</div>	
 		<!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
 		<script src="js/vendor/jquery.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -93,6 +101,7 @@
 		});
 
 		$(document).ready(function(){
+			$(".loading").modal('show');
 			$.ajax({
 		    	url : "/getBackMsgByPre",
 		    	type : "GET",
@@ -100,7 +109,7 @@
 		    	data : {
 		    		"pdmSid" : getQueryString('preMsgSid')
 		    	},
-		    	success : function(result){
+		    	success : function(result){	
 					if(result.sid == null){
 						alert("尚未指派专家！");
 						history.back(-1);
@@ -130,8 +139,10 @@
 				    		alert("尚未指派专家！");				    			
 				    	}
 					});
+					$(".loading").modal('hide');
 		    	},
 		    	error : function(result){
+		    		$(".loading").modal('hide');
 		    		alert("尚未指派专家！");	
 		    	}
 			});

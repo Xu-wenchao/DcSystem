@@ -9,6 +9,7 @@
 	    <link href="css/flat-ui.min.css" rel="stylesheet">
 			<link href="css/demo.css" rel="stylesheet">
 	    <link rel="shortcut icon" href="img/favicon.ico">
+	    <link rel="stylesheet" href="css/style.css">
 	</head>
 	<body style="overflow-x: hidden;">
 		<div>
@@ -62,6 +63,13 @@
 		  </div>
 		</div>
 		<a id="showAMsg" data-toggle="modal" data-target="#addUserModal" hidden="hidden"></a>
+		<div class="modal-dialog fade loading" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+			<div id="facebook">
+			  <div class="bar"></div>
+			  <div class="bar"></div>
+			  <div class="bar"></div>
+			</div>
+		</div>	
 	    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
 	    <script src="js/vendor/jquery.min.js"></script>
 	    <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -71,50 +79,65 @@
 	    <script type="text/javascript">
 	    	function map(key){
 	    		switch(key){
-	    			case "proposer":
-	    				return "申请人：";
-	    				break;
-	    			case "preSalesType":
-	    				return "售前任务类型：";
-	    				break;
-	    			case "applicationDate":
-	    				return "申请时间：";
-	    				break;
-	    			case "proposerDepartment":
-	    				return "申请人部门：";
-	    				break;
-	    			case "aimUnit":
-	    				return "交流单位：";
-	    				break;
-	    			case "aimDepartment":
-	    				return "交流部门：";
-	    				break;
-	    			case "aimLocation":
-	    				return "交流地点：";
-	    				break;
-	    			case "aimTime":
-	    				return "交流时间：";
-	    				break;
-	    			case "clientInterface":
-	    				return "客户接洽人：";
-	    				break;
-	    			case "clientDuty":
-	    				return "接洽人职务：";
-	    				break;
-	    			case "clientBack":
-	    				return "客户背景：";
-	    				break;
-	    			case "aimPurpose":
-	    				return "交流目标：";
-	    				break;
-	    			default:
-	    				return "：";
-	    				break;
+	    			case "proposer": return "申请人：";
+	    			case "preSalesType": return "售前任务类型：";
+	    			case "applicationDate": return "申请时间：";
+	    			case "proposerDepartment": return "申请人部门：";
+	    			case "aimUnit": return "交流单位：";
+	    			case "aimDepartment": return "交流部门：";
+	    			case "aimLocation": return "交流地点：";
+	    			case "aimTime": return "交流时间：";
+	    			case "clientInterface": return "客户接洽人：";
+	    			case "clientDuty": return "接洽人职务：";
+	    			case "clientBack": return "客户背景：";
+	    			case "aimPurpose": return "交流目标：";
+	    			
+	    			case "discussProficient": return "交流专家：";
+	    			case "discussTime": return "实际交流时间：";
+	    			case "discussWay": return "交流方式：";
+	    			case "discussFile": return "交流材料：";
+	    			case "preSalesDays": return "售前报工天数：";
+	    			case "reimbursementAmount": return "差旅报销金额：";
+	    			case "apartmentPerson": return "参与部门/人员：";
+	    			case "discussResult": return "交流情况：";
+	    			
+	    			
+	    			default: return "：";
 	    		}
 	    	}
 	    	function look(sid){
 				$.ajax({
 			    	url : "/getPreMsg",
+			    	type : "GET",
+			    	dataType : "json",
+			    	data : {
+			    		"sid" : sid
+			    	},
+			    	success : function(result){
+			    		$("#aMsgForm").empty();
+			    		for(let key in result){
+			    			if(key == "sid" || key == "userId" || key == "remark" || key == "pdmSid" || key == "userSid"){
+			    				continue;
+			    			}
+			    			let $lab = '<div class="form-group">';
+						    $lab += '<label class="col-md-3 control-label">' + map(key) + '</label>';
+						    $lab += '<label class="col-md-8 control-label" style="text-align: left;">' + result[key] + '</label>';
+			    			$lab += "</div>";
+				    		$("#aMsgForm").append($lab);
+			    		}
+			    		$("#showAMsg").click();
+			    	},
+			    	error : function(result){
+			    		alert(JSON.stringify(result));
+			    	}				
+				});
+	    	}
+
+	    </script>
+	    <script type="text/javascript">
+	    	function watchInMsg(sid){
+				$.ajax({
+			    	url : "/getInMsg",
 			    	type : "GET",
 			    	dataType : "json",
 			    	data : {
@@ -139,7 +162,7 @@
 			    	}				
 				});
 	    	}
-
+	    	
 	    </script>
 	    <script type="text/javascript">
 	    	function addInMsg(inMsgSid){
@@ -148,8 +171,9 @@
 	    </script>
 	    <script type="text/javascript">
 	    	function refresh(){
+	    		$(".loading").modal('show');
 				$.ajax({
-			    	url : "/getPreMsgs",
+			    	url : "/getInMsgs",
 			    	type : "GET",
 			    	dataType : "json",
 			    	success : function(result){
@@ -161,17 +185,22 @@
 			    			$tr += '<td style="vertical-align: middle;">' + result.inMsgs[i].discussProficient + '</td>';
 			    			$tr += '<td style="vertical-align: middle;">' + result.inMsgs[i].discussTime + '</td>';
 			    			$tr += '<td style="vertical-align: middle;">' + result.inMsgs[i].discussWay + '</td>';
-					  		$tr += '<td><button class="btn btn-success" onclick="look(' + result.inMsgs[i].pdmSid + ')">查看</button></td>';
-					  		$tr += '<td><button class="btn btn-success" onclick="addInMsg(' + result.inMsgs[i].sid + ')">修改</button></td>';
+					  		$tr += '<td><button class="btn btn-sm btn-success" onclick="look(' + result.inMsgs[i].pdmSid + ')">售前申请</button></td>';
+					  		if(result.powerMan == "1"){
+						  		$tr += '<td><button class="btn btn-sm btn-primary" onclick="watchInMsg(' + result.inMsgs[i].sid + ')">查看</button></td>';				  								  			
+					  		}else{
+						  		$tr += '<td><button class="btn btn-sm btn-primary" onclick="addInMsg(' + result.inMsgs[i].sid + ')">修改</button></td>';				  			
+					  		}
 					  		$tr += '</tr>';
 			    			$("#userList").append($tr);
 			    		}
 					    if ($('[data-toggle="select"]').length) {
 						      $('[data-toggle="select"]').select2();
 						}
-			    		
+					    $(".loading").modal('hide');
 			    	},
 			    	error : function(result){
+			    		$(".loading").modal('hide');
 			    		alert(JSON.stringify(result));
 			    	}				
 				});

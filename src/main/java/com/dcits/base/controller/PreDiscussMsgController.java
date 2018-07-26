@@ -25,6 +25,7 @@ public class PreDiscussMsgController {
 	@Autowired
 	private UserServices userServices;
 	
+	//临时变量
 	@Autowired
 	private InDiscussMsgServices inDiscussMsgServices;
 	

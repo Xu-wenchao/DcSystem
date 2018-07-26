@@ -9,6 +9,7 @@
 	    <link href="css/flat-ui.min.css" rel="stylesheet">
 			<link href="css/demo.css" rel="stylesheet">
 	    <link rel="shortcut icon" href="img/favicon.ico">
+	    <link rel="stylesheet" href="css/style.css">
 	</head>
 	<body style="overflow-x: hidden;">
 		<div>
@@ -93,7 +94,13 @@
 		    </div>
 		  </div>
 		</div>
-		
+		<div class="modal-dialog fade loading" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+			<div id="facebook">
+			  <div class="bar"></div>
+			  <div class="bar"></div>
+			  <div class="bar"></div>
+			</div>
+		</div>			
 	    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
 	    <script src="js/vendor/jquery.min.js"></script>
 	    <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -102,11 +109,13 @@
 	    <script src="js/application.js"></script>
 	    <script type="text/javascript">
 	    	function refresh(){
+	    		$(".loading").modal('show');
 				$.ajax({
 			    	url : "/queryUsers",
 			    	type : "GET",
 			    	dataType : "json",
 			    	success : function(result){
+			    		$(".loading").modal('hide');
 			    		//result.users	    		
 			    		let sw = ['active', 'success', 'warning', 'danger', 'info'];
 			    		for(let i = 0; i < result.users.length; i++){
@@ -123,6 +132,7 @@
 			    		}
 			    	},
 			    	error : function(result){
+			    		$(".loading").modal('hide');
 			    		alert(JSON.stringify(result));
 			    	}				
 				});
@@ -130,6 +140,7 @@
 	    </script>
 	   	<script type="text/javascript">
 	   		$("#addTrue").click(function(){
+	   			$(".loading").modal('show');
 	   			$.ajax({
 			    	url : "/addUser",
 			    	type : "GET",
@@ -142,6 +153,7 @@
 			    		"roleId" : $("#role").val()
 			    	},
 			    	success : function(result){
+			    		$(".loading").modal('hide');
 			    		if(result.result == "1"){
 			    			$("#addCloseBtn").click();
 			    		}else{
@@ -149,6 +161,7 @@
 			    		}
 			    	},
 			    	error : function(result){
+			    		$(".loading").modal('hide');
 			    		alert(result);
 			    	}	   				
 	   			});
@@ -159,15 +172,18 @@
 	    		
 	    	}
 	    	function del(that, sid){
+	    		$(".loading").modal('show');
 	    		$.ajax({
 			    	url : "/delUser",
 			    	type : "GET",
 			    	dataType : "json",
 			    	data : {"sid" : sid},
 			    	success : function(result){
+			    		$(".loading").modal('hide');
 			    		$(that).parent().parent().remove();
 			    	},
 			    	error : function(result){
+			    		$(".loading").modal('hide');
 			    		alert(result);
 			    	}
 	    		});
@@ -177,6 +193,7 @@
 	    <script type="text/javascript">
 	    	$(function(){
 		    	refresh();
+		    	$(".loading").modal('show');
 		    	$.ajax({
 			    	url : "/getAllRoles",
 			    	type : "GET",
@@ -185,8 +202,10 @@
 			    		for(let i = 0; i < result.roles.length; i++){
 			    			$("#role").append("<option value='" + result.roles[i].sid + "'>" + result.roles[i].roleName + "</option>");
 			    		}
+			    		$(".loading").modal('hide');
 			    	},
 			    	error : function(result){
+			    		$(".loading").modal('hide');
 			    		alert(result);
 			    	}
 		    	});

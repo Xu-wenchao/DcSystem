@@ -12,6 +12,7 @@
 		<!-- Loading Flat UI -->
 		<link href="css/flat-ui.min.css" rel="stylesheet">
 		<link href="css/demo.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/style.css">
 	</head>
 
 	<body>
@@ -102,6 +103,13 @@
 				</div>
 			</div>
 		</form>
+		<div class="modal-dialog fade loading" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+			<div id="facebook">
+			  <div class="bar"></div>
+			  <div class="bar"></div>
+			  <div class="bar"></div>
+			</div>
+		</div>	
 		<!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
 		<script src="js/vendor/jquery.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -156,6 +164,7 @@
 			});
 
 			$(document).ready(function(){
+				$(".loading").modal('show');
 				$.ajax({
 			    	url : "/getInMsg",
 			    	type : "GET",
@@ -172,8 +181,10 @@
 			    		$("input[name='reimbursementAmount']").val(result.reimbursementAmount);
 			    		$("input[name='apartmentPerson']").tagsinput('add', result.apartmentPerson);
 			    		$("#discussResult").val(result.discussResult);
+			    		$(".loading").modal('hide');
 			    	},
 			    	error : function(result){
+			    		$(".loading").modal('hide');
 			    		alert("getInMsg:" + JSON.stringify(result));
 			    	}
 				});

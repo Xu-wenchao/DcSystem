@@ -26,7 +26,7 @@ public class InDiscussMsgServices {
 		if(userSid != 0) {
 			createCriteria.andUserSidEqualTo(userSid);
 		}
-		return inDiscussMsgMapper.selectByExample(example);
+		return inDiscussMsgMapper.selectByExample(example);	
 	}
 	
 	

@@ -13,9 +13,14 @@ import com.dcits.base.pojo.Indiscussmsg;
 import com.dcits.base.pojo.Indiscussmsg;
 import com.dcits.base.pojo.User;
 import com.dcits.base.service.InDiscussMsgServices;
+import com.dcits.base.service.UserServices;
 
 @RestController
 public class InDiscussMsgController {
+	
+	@Autowired
+	private UserServices userServices;
+	
 	@Autowired
 	private InDiscussMsgServices services;
 	
@@ -35,11 +40,29 @@ public class InDiscussMsgController {
 	}
 	
 	@RequestMapping("/getInMsgs")
-	public HashMap<String, List<Indiscussmsg>> getInMsgs(Integer userSid, HttpSession session){
-		HashMap<String, List<Indiscussmsg>> map = new HashMap<>();
-		map.put("inMsgs", services.getInMsgsByUserSid(((User)session.getAttribute("user")).getSid()));
+	public HashMap<String, Object> getInMsgs(Integer userSid, HttpSession session){
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("powerMan", "0");
+
+		//用session中的sid
+		User user = ((User)session.getAttribute("user"));
+		userSid = user.getSid();
+		String roleName = (String)session.getAttribute("role");
+		
+		if(roleName.equals("系统管理员")) {
+			userSid = 0;
+			map.put("powerMan", "1");
+			//map.put("users", userServices.selectAllActiveUser());
+			map.put("inMsgs", services.getInMsgsByUserSid(userSid));			
+		}else if(roleName.equals("专家")){
+			map.put("inMsgs", services.getInMsgsByUserSid(userSid));			
+		}else { //销售人员
+			map.put("inMsgs", services.getInMsgsByUserSid(userSid));			
+		}
 		return map;
 	}
+	
+	
 	@RequestMapping("/getInMsg")
 	public Indiscussmsg getInMsg(Integer sid){
 		return services.getInMsgBySid(sid);

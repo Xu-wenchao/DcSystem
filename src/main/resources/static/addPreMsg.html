@@ -130,8 +130,8 @@
 					<button class="btn btn-primary" id="addPreMsgOK">提交</button>
 				</div>
 			</div>
-
 		</form>
+
 		<!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
 		<script src="js/vendor/jquery.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -139,6 +139,7 @@
 		<script src="js/flat-ui.min.js"></script>
 		<script src="js/application.js"></script>
 		<script type="text/javascript">
+			//$(".loading").modal('hide');
 			$.ajax({
 		    	url : "/getTaskTypes",
 		    	type : "GET",
