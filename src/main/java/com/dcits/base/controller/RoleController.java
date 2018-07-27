@@ -23,4 +23,8 @@ public class RoleController {
 		}};
 	}
 	
+	@RequestMapping("/addRole")
+	public String addRole(Role role) {
+		return "{ \"result\" : " + roleServices.addRole(role) + " }";
+	}
 }

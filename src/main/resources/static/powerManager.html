@@ -1,0 +1,331 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+
+<link href="css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Loading Flat UI -->
+<link href="css/flat-ui.min.css" rel="stylesheet">
+<link href="css/demo.css" rel="stylesheet">
+<link rel="shortcut icon" href="img/favicon.ico">
+<link href="css/demo.css" rel="stylesheet">
+
+</head>
+<body scroll="no" style="overflow-x: hidden;">
+	<br />
+	<div>
+		<div class="row demo-navigation">
+			<div class="col-md-4">
+				<div class="btn-toolbar">
+					<div class="btn-group">
+						<a class="btn btn-primary" href="#fakelink" data-toggle="modal"
+							data-target="#addRoleModal" title="添加角色"><span
+							class="fui-user"></span></a> <a class="btn btn-primary"
+							href="#fakelink" data-toggle="modal" data-target="#addMenuModal"
+							title="添加菜单"><span class="fui-document"></span></a> <a
+							class="btn btn-primary" href="#fakelink" onclick="exit()"
+							title="注销"><span class="fui-exit"></span></a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-md-offset-2">
+				<form class="navbar-form navbar-right" action="#" role="search">
+					<div class="form-group">
+						<div class="input-group">
+							<input class="form-control" id="navbarInput-01" type="search"
+								placeholder="Search"> <span class="input-group-btn">
+								<button type="submit" class="btn">
+									<span class="fui-search"></span>
+								</button>
+							</span>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<table class="table table-hover" id="roleList">
+			<tr>
+				<th>#</th>
+				<th>角色名称</th>
+				<th>指定权限</th>
+				<th>删除</th>
+			</tr>
+		</table>
+
+	</div>
+	<div class="modal-dialog fade loading" tabindex="-1" role="dialog"
+		aria-labelledby="mySmallModalLabel">
+		<div id="facebook">
+			<div class="bar"></div>
+			<div class="bar"></div>
+			<div class="bar"></div>
+		</div>
+	</div>
+
+	<!-- 添加菜单 -->
+	<div class="modal fade" id="addMenuModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">添加菜单</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<form class="form-horizontal">
+							<div class="form-group">
+								<label class="col-md-4 control-label">菜单名称：</label>
+								<div class="col-md-7">
+									<input name="menuName" type="text" class="form-control"
+										placeholder="菜单名称">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-4 control-label">菜单链接：</label>
+								<div class="col-md-7">
+									<input name="remark" type="text" class="form-control"
+										placeholder="html链接">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-4 control-label">排序数字：</label>
+								<div class="col-md-7">
+									<input name="sort" type="text" class="form-control"
+										placeholder="菜单列表排序的数字">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-4 control-label">父级菜单：</label>
+								<div class="col-md-7">
+									<select id="parentMenu"
+										class="form-control select select-primary"
+										data-toggle="select">
+										<option value='0' selected="selected">根菜单</option>
+									</select>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" onclick="addMenu()">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 添加角色 -->
+	<div class="modal fade" id="addRoleModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">添加角色</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<form class="form-horizontal">
+							<div class="form-group">
+								<label class="col-md-4 control-label">角色名称：</label>
+								<div class="col-md-7">
+									<input name="roleName" type="text" class="form-control"
+										placeholder="角色名称">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" onclick="addRole()">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 权限设置 -->
+	<div class="modal fade" id="updatePowerModal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">设置权限</h4>
+				</div>
+				<div class="modal-body">
+					<input name="msid" hidden>
+					<div class="share mrl" >
+						<ul id="menusPower">
+						</ul>
+						<a href="#" class="btn btn-primary btn-block btn-large">关闭</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script src="js/vendor/jquery.min.js"></script>
+	<script src="js/vendor/video.js"></script>
+	<script src="js/flat-ui.min.js"></script>
+	<script src="js/application.js"></script>
+	<script type="application/javascript">
+		
+		
+	    	function refresh(){
+	    		$(".loading").modal('show');
+				$.ajax({
+			    	url : "/getAllRoles",
+			    	type : "GET",
+			    	dataType : "json",
+			    	success : function(result){
+			    		//result.roles[i].sid
+			    		$(".loading").modal('hide');
+			    		let sw = ['active', 'success', 'warning', 'danger', 'info'];
+			    		for(let i = 0; i < result.roles.length; i++){
+			    			let $tr = "<tr class='" + sw[i % 5] + "'>";
+			    			$tr += '<td style="vertical-align: middle;">' + (i + 1) + '</td>';
+			    			$tr += '<td style="vertical-align: middle;">' + result.roles[i].roleName + '</td>';
+			    			$tr += '<td style="vertical-align: middle;"><a class="btn btn-primary" onclick="operRole('
+			    					+ result.roles[i].sid + ')"><span class="fui-new"></span></a></td>';
+			    			$tr += '<td style="vertical-align: middle;"><a class="btn btn-danger" onclick="delRole(' 
+			    					+ result.roles[i].sid + ')"><span class="fui-cross"></span></a></td>';
+			    			$tr += "</tr>";
+			    			$("#roleList").append($tr);
+			    		}
+			    	},
+			    	error : function(result){
+			    		$(".loading").modal('hide');
+			    		alert(JSON.stringify(result));
+			    	}				
+				});
+	    	}
+		
+	
+	</script>
+
+	<script type="text/javascript">
+		$(function() {
+			refresh();
+			$.ajax({
+				url : "/getAllMenus",
+				type : "GET",
+				dataType : "json",
+				success : function(result) {
+					let ms = result.menus;
+					for (let i = 0; i < ms.length; i++) {
+						$("#parentMenu").append(
+								"<option value='" + ms[i].sid + "'>"
+										+ ms[i].menuName + "</option>");
+					}
+				},
+				error : function(result) {
+					alert(result);
+				}
+			});
+		});
+	</script>
+	<script type="text/javascript">
+
+	</script>
+	<script type="text/javascript">
+		function operRole(sid) {
+			$.ajax({
+				url : "/getMenusPower",
+				type : "GET",
+				dataType : "json",
+				data : {
+					"menuSid" : sid
+				},
+				success : function(result) {
+					$('input[name="msid"]').val(sid);
+					let mp = result.menus;
+					$("#menusPower").empty();
+					for(let i = 0; i < mp.length; i++){
+						$("#menusPower").append('<li><label class="share-label" for="share-toggle2">' 
+							+ mp[i].menu_name + '</label><input type="checkbox"  ' 
+							+ (mp[i].menu_sid == null ? '' : 'checked=""') + ' data-toggle="switch" /></li>');					
+					}
+				    $('[data-toggle="switch"]').bootstrapSwitch();
+					//$.getScript("js/application.js");
+					$("#updatePowerModal").modal('show');
+
+				},
+				error : function(result) {
+					alert(result);
+				}
+
+			});
+			
+		}
+		function delRole(sid) {
+			alert("此功能还没实现");
+		}
+	</script>
+	<script type="text/javascript">
+
+	
+	</script>
+
+	<script type="text/javascript">
+		function addRole() {
+			$.ajax({
+				url : "/addRole",
+				type : "GET",
+				dataType : "json",
+				data : {
+					"roleName" : $("input[name='roleName']").val()
+				},
+				success : function(result) {
+					if (result.result == 1) {
+						$("#addRoleModal").modal('hide');
+					} else {
+						alert("添加失败");
+					}
+				},
+				error : function(result) {
+					alert(result);
+				}
+			});
+		}
+
+		function addMenu() {
+			$.ajax({
+				url : "/addMenu",
+				type : "GET",
+				dataType : "json",
+				data : {
+					"menuName" : $("input[name='menuName']").val(),
+					"remark" : $("input[name='remark']").val(),
+					"sort" : $("input[name='sort']").val(),
+					"pSid" : $("#parentMenu").val()
+				},
+				success : function(result) {
+					if (result.result == 1) {
+						$("#addMenuModal").modal('hide');
+					} else {
+						alert("添加失败");
+					}
+				},
+				error : function(result) {
+					alert(result);
+				}
+			});
+		}
+	</script>
+</body>
+</html>

@@ -18,4 +18,8 @@ public class RoleServices {
 	public List<Role> getAllRoles(){
 		return roleMapper.selectByExample(new RoleExample());
 	}
+
+	public int addRole(Role role) {
+		return roleMapper.insert(role);
+	}
 }

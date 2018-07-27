@@ -19,4 +19,7 @@ public interface MyMapper {
 			+ "and role.sid=rolepower.role_sid and rolepower.menu_sid=menu.sid")
 	List<HashMap<String, String>> getMenus(Integer id);
 	
+	@Select("select menu_sid, menu_name from menu LEFT JOIN rolepower on rolepower.role_sid = #{id} and menu.sid = rolepower.menu_sid")
+	List<HashMap<String, Object>> getMenus4Power(Integer id);
+	
 }
